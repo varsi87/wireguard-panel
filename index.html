@@ -4,78 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل امارات | WireGuard</title>
-    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        :root {
-            --bg-color: #0b0f19; --card-bg: #111827; --card-border: #1f2937;
-            --primary: #3b82f6; --text-main: #f3f4f6; --text-muted: #9ca3af;
-            --success: #10b981; --danger: #ef4444; --gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
-        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 12px; display: flex; justify-content: center; }
-        .container { width: 100%; max-width: 480px; }
-        .header-card, .panel-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 14px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-align: center; }
-        .header-card h1 { font-size: 1.1rem; margin-bottom: 4px; color: #fff; }
-        .header-card p { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.4; }
-        .owner-badge { display: inline-block; background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
+        body { background-color: #0b0f19; color: #f3f4f6; min-height: 100vh; padding: 10px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 450px; }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 12px; margin-bottom: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        h1 { font-size: 1rem; color: #fff; margin-bottom: 4px; }
+        p { font-size: 0.7rem; color: #9ca3af; margin-bottom: 6px; }
+        .badge { display: inline-block; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 10px; border-radius: 15px; font-size: 0.68rem; font-weight: bold; }
         
-        .nav-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
-        .nav-tab { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-muted); padding: 8px 4px; border-radius: 10px; font-size: 0.75rem; cursor: pointer; text-align: center; }
-        .nav-tab.active { background: var(--primary); color: #fff; font-weight: bold; }
+        .tabs { display: flex; gap: 4px; margin-bottom: 10px; }
+        .tab { flex: 1; background: #111827; border: 1px solid #1f2937; color: #9ca3af; padding: 8px 2px; border-radius: 8px; font-size: 0.72rem; cursor: pointer; text-align: center; }
+        .tab.active { background: #3b82f6; color: #fff; font-weight: bold; }
         
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .section-title { font-size: 0.9rem; margin-bottom: 10px; color: #fff; text-align: right; font-weight: bold; }
+        .content { display: none; }
+        .content.active { display: block; }
+        .title { font-size: 0.85rem; margin-bottom: 8px; color: #fff; text-align: right; font-weight: bold; }
         
-        .form-group { margin-bottom: 10px; text-align: right; }
-        .form-label { display: block; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 4px; }
-        input { width: 100%; background: #0f172a; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px; color: #fff; font-size: 0.85rem; outline: none; }
+        .group { margin-bottom: 8px; text-align: right; }
+        label { display: block; font-size: 0.7rem; color: #9ca3af; margin-bottom: 3px; }
+        input, select { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 9px; color: #fff; font-size: 0.8rem; outline: none; }
         
-        .btn-gradient { width: 100%; background: var(--gradient); color: #fff; border: none; padding: 11px; border-radius: 10px; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
+        .btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); color: #fff; border: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
         
-        .config-item { background: #0f172a; border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right; }
-        .config-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 0.85rem; font-weight: bold; }
-        .config-info { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 10px; }
+        .item { background: #0f172a; border: 1px solid #1f2937; border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right; }
+        .item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 0.8rem; font-weight: bold; }
+        .item-sub { font-size: 0.65rem; color: #9ca3af; margin-bottom: 8px; }
         
-        .config-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px; }
-        .action-btn { background: #1e293b; border: 1px solid var(--card-border); color: var(--text-main); padding: 8px 4px; border-radius: 8px; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; text-align: center; }
-        .action-btn.download { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-        .action-btn.copy { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-        .action-btn.qr { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .action-btn.danger { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-        .action-btn.sub { background: var(--gradient); color: #fff; border: none; grid-column: span 3; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        .action-btn { background: #1e293b; border: 1px solid #1f2937; color: #f3f4f6; padding: 6px 2px; border-radius: 6px; font-size: 0.65rem; cursor: pointer; text-align: center; }
+        .action-btn.dl { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+        .action-btn.cp { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .action-btn.del { background: rgba(239, 68, 68, 0.2); color: #f87171; grid-column: span 3; }
         
-        .status-badge { font-size: 0.68rem; padding: 2px 8px; border-radius: 6px; }
-        .status-badge.active { background: rgba(16,185,129,0.2); color: #34d399; }
-        .status-badge.disabled { background: rgba(239,68,68,0.2); color: #f87171; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: var(--card-bg); padding: 20px; border-radius: 16px; text-align: center; border: 1px solid var(--card-border); width: 90%; max-width: 320px; }
-        #qrcode { background: #fff; padding: 10px; border-radius: 8px; display: inline-block; margin: 12px 0; }
-        .close-modal { background: var(--danger); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; }
+        .status { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; }
+        .status.on { background: rgba(16,185,129,0.2); color: #34d399; }
+        .status.off { background: rgba(239,68,68,0.2); color: #f87171; }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header-card">
+    <div class="card">
         <h1>پنل 🇦🇪 امارات</h1>
-        <p>پنل متصل به کانفیگ اصلی WireGuard | حجم پنل بر اساس سهم کانفیگ</p>
-        <div class="owner-badge"><i class="fa-solid fa-shield-halved"></i> مالک: Arsin</div>
+        <p>مدیریت کانفیگ‌های اختصاصی WireGuard</p>
+        <div class="badge">🛡️ مالک: Arsin</div>
     </div>
 
-    <div class="nav-tabs">
-        <div class="nav-tab" onclick="switchTab('dashboard', this)">داشبورد</div>
-        <div class="nav-tab active" onclick="switchTab('create', this)">ساخت کانفیگ</div>
-        <div class="nav-tab" onclick="switchTab('configs', this)">کانفیگ‌ها</div>
-        <div class="nav-tab" onclick="switchTab('sub', this)">لینک ساب</div>
+    <div class="tabs">
+        <div class="tab" onclick="switchTab('dash', this)">داشبورد</div>
+        <div class="tab active" onclick="switchTab('make', this)">ساخت کانفیگ</div>
+        <div class="tab" onclick="switchTab('list', this)">کانفیگ‌ها</div>
+        <div class="tab" onclick="switchTab('sub', this)">لینک ساب</div>
     </div>
 
     <!-- داشبورد -->
-    <div id="dashboard" class="tab-content">
-        <div class="panel-card">
-            <div class="section-title">📊 داشبورد این پنل</div>
-            <p class="form-label" style="text-align: right; margin-bottom: 6px;">کشور: 🟢 سرور اصلی</p>
-            
-    
+    <div id="dash" class="content">
+        <div class="card">
+            <div class="title">📊 وضعیت کلی پنل</div>
+            <p style="text-align: right;">سرور: امارات (پایداری عالی)</p>
+            <p style="text-align: right;">کل مصرف: 237 گیگ از 8000 گیگ</p>
+            <p style="text-align: right;">تعداد کانفیگ‌ها: <span id="countBox">0</span></p>
+        </div>
+    </div>
+
+    <!-- ساخت کانفیگ -->
+    <div id="make" class="content active">
+        <div class="card">
+            <div class="title">➕ ساخت کانفیگ جدید</div>
+            <div class="group">
+                <label>نام کانفیگ (مثلا پابجی ویژه)</label>
+                <input type="text" id="confName" value="پابجی آرشین">
+            </div>
+            <div class="group">
+                <label>مدت اعتبار (روز)</label>
+                <input type="number" id="confDays" value="30">
+            </div>
+            <div class="group">
+                <label>حجم (گیگابایت)</label>
+                <input type="number" id="confTraffic" value="50">
+            </div>
+            <button class="btn" onclick="createConfig()">✨ ساخت و دانلود کانفیگ</button>
+        </div>
+    </div>
+
+    <!-- لیست کانفیگ‌ها -->
+    <div id="list" class="content">
+        <div class="card">
+            <div class="title">📁 لیست کانفیگ‌های ساخته شده</div>
+            <div id="configsContainer"><p style="color: #9ca3af; font-size: 0.7rem;">هنوز کانفیگی ساخته نشده است.</p></div>
+        </div>
+    </div>
+
+    <!-- لینک ساب -->
+    <div id="sub" class="content">
+        <div class="card">
+            <div class="title">🔗 لینک اشتراک (Subscription)</div>
+            <input type="text" id="subInput" readonly value="https://api.pastes.dev/arsin-wg-sub" style="margin-bottom: 8px; font-size: 0.68rem;">
+            <button class="action-btn cp" style="width:100%; padding: 10px; font-size: 0.75rem;" onclick="copySub()">کپی لینک ساب کلی</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const parentConfig = `[Interface]
+PrivateKey = ABFU4WRDb7WZ8zDVkmegu3F1GBRaeUJh=8b9a02jUI=
+Address = 192.168.72.77/32
+DNS = 1.1.1.1,8.8.8.8
+
+[Peer]
+PublicKey = rtKJ7YW0UBdvgb5by+ojafsFOUf0Y3MziiaWLL0ytkY=
+Endpoint = t1wire.steelping.ir:58531
+AllowedIPs = 0.0.0.0/0,::/0`;
+
+    let db = JSON.parse(localStorage.getItem('arsin_wg_db') || '[]');
+
+    function switchTab(id, el) {
+        document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        if(el) el.classList.add('active');
+        if(id === 'list' || id === 'dash') renderList();
+    }
+
+    function createConfig() {
+        let name = document.getElementById('confName').value.trim() || 'کاربر جدید';
+        let days = document.getElementById('confDays').value;
+        let traffic = document.getElementById('confTraffic').value;
+
+        let newConf = {
+            id: Date.now(),
+            name: name,
+            days: days,
+            traffic: traffic,
+            status: 'فعال',
+            text: parentConfig + `\n# Name: ${name} | Days: ${days}`
+        };
+
+        db.push(newConf);
+        localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+        
+        // دانلود خودکار فایل
+        downloadFile(newConf.name, newConf.text);
+        alert('کانفیگ با موفقیت ساخته شد و دانلود شد!');
+        
+        // جابجایی به صفحه لیست
+        document.querySelectorAll('.tab')[2].click();
+    }
+
+    function renderList() {
+        document.getElementById('countBox').innerText = db.length;
+        let container = document.getElementById('configsContainer');
+        if(db.length === 0) {
+            container.innerHTML = `<p style="color: #9ca3af; font-size: 0.7rem;">هنوز کانفیگی ساخته نشده است.</p>`;
+            return;
+        }
+        let html = '';
+        db.forEach(item => {
+            let stClass = item.status === 'فعال' ? 'on' : 'off';
+            html += `<div class="item">
+                <div class="item-head">
+                    <span>🎮 ${item.name}</span>
+                    <span class="status ${stClass}">${item.status}</span>
+                </div>
+                <div class="item-sub">⏳ ${item.days} روز • 📦 ${item.traffic} گیگ</div>
+                <div class="grid">
+                    <button class="action-btn dl" onclick="downloadFile('${item.name}', window.db.find(x=>x.id==${item.id}).text)">📥 دانلود</button>
+                    <button class="action-btn cp" onclick="copyText(window.db.find(x=>x.id==${item.id}).text)">📋 کپی</button>
+                    <button class="action-btn" onclick="toggleItem(${item.id})">🔄 تغییر وضعیت</button>
+                    <button class="action-btn del" onclick="deleteItem(${item.id})">🗑️ حذف کانفیگ</button>
+                </div>
+            </div>`;
+        });
+        container.innerHTML = html;
+        window.db = db;
+    }
+
+    function downloadFile(filename, content) {
+        let blob = new Blob([content], { type: 'text/plain' });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement('a');
+        a.href = url;
+        a.download = `${filename}.conf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => alert('کانفیگ با موفقیت کپی شد!'));
+    }
+
+    function toggleItem(id) {
+        let item = db.find(x => x.id === id);
+        if(item) {
+            item.status = item.status === 'فعال' ? 'غیرفعال' : 'فعال';
+            localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+            renderList();
+        }
+    }
+
+    function deleteItem(id) {
+        if(confirm('آیا از حذف این کانفیگ مطمئن هستید؟')) {
+            db = db.filter(x => x.id !== id);
+            localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+            renderList();
+        }
+    }
+
+    function copySub() {
+        navigator.clipboard.writeText(document.getElementById('subInput').value).then(() => alert('لینک ساب کپی شد!'));
+    }
+</script>
+</body>
+</html>
