@@ -28,7 +28,7 @@
         .section-title { font-size: 0.95rem; margin-bottom: 12px; color: #fff; text-align: right; }
         .form-group { margin-bottom: 12px; text-align: right; }
         .form-label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
-        textarea, input { width: 100%; background: #0f172a; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px; color: #fff; font-size: 0.85rem; outline: none; }
+        input { width: 100%; background: #0f172a; border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; color: #fff; font-size: 0.9rem; outline: none; }
         .btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); color: #fff; border: none; padding: 12px; border-radius: 10px; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
         .config-item { background: #0f172a; border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right; }
         .config-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.85rem; font-weight: bold; }
@@ -68,14 +68,10 @@
         <div class="panel-card">
             <div class="section-title">➕ ساخت کانفیگ جدید</div>
             <div class="form-group">
-                <label class="form-label">کانفیگ مادر (Interface & Peer):</label>
-                <textarea id="parentConfig" rows="5" placeholder="[Interface]..."></textarea>
+                <label class="form-label">نام مشتری یا کاربر جدید:</label>
+                <input type="text" id="newUsername" placeholder="مثلا: مشتری ۱ یا نام دلخواه">
             </div>
-            <div class="form-group">
-                <label class="form-label">نام مشتری:</label>
-                <input type="text" id="newUsername" placeholder="مثلا: مشتری ۱">
-            </div>
-            <button class="btn" onclick="generateConfig()">تایید و ساخت فایل</button>
+            <button class="btn" onclick="generateConfig()">ساخت آنی کانفیگ</button>
         </div>
     </div>
     <div id="configs" class="tab-content">
@@ -100,7 +96,21 @@
     </div>
 </div>
 <script>
+    // کانفیگ مادر پیش‌فرض (پنهان و آماده در پشت صحنه)
+    const defaultParent = `[Interface]
+PrivateKey = ABFU4WRDb7WZ8zDVkmegu3F1GBRaeUJh=8b9a02jUI=
+Address = 192.168.72.77/32
+MTU = 1300
+DNS = 1.1.1.1,8.8.8.8,95.85.95.85,2.56.220.2,94.140.14.14,149.1
+
+[Peer]
+PublicKey = rtKJ7YW0UBdvgb5by+ojafsFOUf0Y3MziiaWLL0ytkY=
+Endpoint = t1wire.steelping.ir:58531
+AllowedIPs = 0.0.0.0/0,::/0
+PersistentKeepalive = 20`;
+
     let configs = JSON.parse(localStorage.getItem('wg_configs') || '[]');
+
     function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
@@ -108,20 +118,23 @@
         event.currentTarget.classList.add('active');
         if(tabId === 'configs') renderConfigs();
     }
+
     function generateConfig() {
-        const parent = document.getElementById('parentConfig').value.trim();
         const username = document.getElementById('newUsername').value.trim();
-        if(!parent || !username) { alert('اطلاعات کامل نیست!'); return; }
-        let clientConfig = parent.replace(/Address\s*=\s*([0-9\.]+)\/\d+/, (m, ip) => {
+        if(!username) { alert('لطفاً نام مشتری را وارد کنید!'); return; }
+        
+        let clientConfig = defaultParent.replace(/Address\s*=\s*([0-9\.]+)\/\d+/, (m, ip) => {
             let p = ip.split('.'); p[3] = Math.floor(Math.random() * 200) + 10;
             return `Address = ${p.join('.')}/32`;
         });
+
         configs.push({ id: Date.now(), name: username, content: clientConfig, date: new Date().toLocaleDateString('fa-IR') });
         localStorage.setItem('wg_configs', JSON.stringify(configs));
         document.getElementById('newUsername').value = '';
-        alert('ساخته شد!');
+        alert('کانفیگ با موفقیت ساخته شد!');
         switchTab('configs');
     }
+
     function renderConfigs() {
         const listDiv = document.getElementById('configsList');
         document.getElementById('activeCount').innerText = configs.length;
@@ -140,6 +153,7 @@
         listDiv.innerHTML = html;
         document.getElementById('subLinkDisplay').value = window.location.href + '#sub-' + configs.length;
     }
+
     function downloadConf(id) {
         const cfg = configs.find(c => c.id === id);
         if(!cfg) return;
@@ -148,11 +162,13 @@
         const a = document.createElement('a'); a.href = url; a.download = `${cfg.name}-wg.conf`;
         document.body.appendChild(a); a.click(); document.body.removeChild(a);
     }
+
     function copyConfig(id) {
         const cfg = configs.find(c => c.id === id);
         if(!cfg) return;
         navigator.clipboard.writeText(cfg.content).then(() => alert('کپی شد!'));
     }
+
     function showQr(id) {
         const cfg = configs.find(c => c.id === id);
         if(!cfg) return;
@@ -160,10 +176,13 @@
         document.getElementById('qrModal').style.display = 'flex';
         new QRCode(document.getElementById("qrcode"), { text: cfg.content, width: 160, height: 160 });
     }
+
     function closeQrModal() { document.getElementById('qrModal').style.display = 'none'; }
+
     function copySubLink() {
         navigator.clipboard.writeText(document.getElementById('subLinkDisplay').value).then(() => alert('لینک ساب کپی شد!'));
     }
+
     function deleteConfig(id) {
         if(confirm('حذف شود؟')) {
             configs = configs.filter(c => c.id !== id);
@@ -171,7 +190,9 @@
             renderConfigs();
         }
     }
+
     window.onload = renderConfigs;
 </script>
 </body>
-</html>
+    </html>
+    
