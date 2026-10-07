@@ -46,7 +46,7 @@
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; padding: 15px; }
         .modal-box { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 16px; width: 100%; max-width: 380px; text-align: center; }
         .modal-title { font-size: 0.9rem; color: #fff; margin-bottom: 10px; font-weight: bold; }
-        .modal-input { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 10px; color: #38bdf8; font-size: 0.75rem; text-align: center; margin-bottom: 10px; outline: none; }
+        .modal-input { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 10px; color: #38bdf8; font-size: 0.7rem; text-align: center; margin-bottom: 10px; outline: none; height: 80px; resize: none; }
         .close-btn { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; width: 100%; }
     </style>
 </head>
@@ -55,7 +55,7 @@
     <div class="card">
         <h1>پنل 🇦🇪 امارات</h1>
         <p>مدیریت کانفیگ‌های اختصاصی WireGuard</p>
-        <div class="badge">🛡️ مالک: Arsin</div>
+        <div class="badge">🛡️ مالک: پابجی پلیر</div>
     </div>
 
     <div class="tabs">
@@ -72,6 +72,7 @@
             <p style="text-align: right;">سرور: امارات (پایداری عالی)</p>
             <p style="text-align: right;">کل مصرف: 237 گیگ از 8000 گیگ</p>
             <p style="text-align: right;">تعداد کانفیگ‌ها: <span id="countBox">0</span></p>
+            <p style="text-align: right;">مالک: پابجی پلیر</p>
         </div>
     </div>
 
@@ -81,7 +82,7 @@
             <div class="title">➕ ساخت کانفیگ جدید</div>
             <div class="group">
                 <label>نام کانفیگ (مثلا پابجی ویژه)</label>
-                <input type="text" id="confName" value="پابجی آرشین">
+                <input type="text" id="confName" value="پابجی ویژه">
             </div>
             <div class="group">
                 <label>مدت اعتبار (روز)</label>
@@ -107,9 +108,9 @@
     <div id="sub" class="content">
         <div class="card">
             <div class="title">🔗 لینک اشتراک (Subscription) کلی</div>
-            <p style="text-align: right; margin-bottom: 6px;">لینک زیر تمام کانفیگ‌های فعال شما را به صورت ساب‌پکیج پوشش می‌دهد:</p>
-            <input type="text" id="subInput" readonly value="https://api.pastes.dev/arsin-wg-sub" style="margin-bottom: 8px; font-size: 0.7rem; text-align: center; color: #38bdf8;">
-            <button class="action-btn cp" style="width:100%; padding: 10px; font-size: 0.75rem;" onclick="copyGlobalSub()">📋 کپی لینک ساب کلی</button>
+            <p style="text-align: right; margin-bottom: 6px;">کد ساب‌پکیج تمام کانفیگ‌های فعال شما:</p>
+            <input type="text" id="subInput" readonly value="sub://pubg-player-wg-config-base64" style="margin-bottom: 8px; font-size: 0.7rem; text-align: center; color: #38bdf8;">
+            <button class="action-btn cp" style="width:100%; padding: 10px; font-size: 0.75rem;" onclick="copyGlobalSub()">📋 کپی ساب کلی</button>
         </div>
     </div>
 </div>
@@ -117,10 +118,10 @@
 <!-- Modal for Sub Link -->
 <div id="subModal" class="modal">
     <div class="modal-box">
-        <div class="modal-title">🔗 لینک ساب اختصاصی کانفیگ</div>
-        <p style="font-size: 0.68rem; color: #9ca3af; margin-bottom: 6px;">متن زیر را کپی کرده یا در اپلیکیشن وارد کنید:</p>
-        <input type="text" id="modalSubText" class="modal-input" readonly onclick="this.select();">
-        <button class="action-btn cp" style="width:100%; padding: 9px; font-size: 0.75rem; margin-bottom: 8px;" onclick="copyModalInput()">📋 کپی کردن لینک ساب</button>
+        <div class="modal-title">🔗 لینک ساب (Subscription) اختصاصی</div>
+        <p style="font-size: 0.68rem; color: #9ca3af; margin-bottom: 6px;">لینک یا بیس‌۶۴ کانفیگ برای ایمپورت در اپلیکیشن:</p>
+        <textarea id="modalSubText" class="modal-input" readonly onclick="this.select();"></textarea>
+        <button class="action-btn cp" style="width:100%; padding: 9px; font-size: 0.75rem; margin-bottom: 8px;" onclick="copyModalInput()">📋 کپی کردن محتوای ساب</button>
         <button class="close-btn" onclick="closeModal()">بستن</button>
     </div>
 </div>
@@ -136,7 +137,7 @@ PublicKey = rtKJ7YW0UBdvgb5by+ojafsFOUf0Y3MziiaWLL0ytkY=
 Endpoint = t1wire.steelping.ir:58531
 AllowedIPs = 0.0.0.0/0,::/0`;
 
-    let db = JSON.parse(localStorage.getItem('arsin_wg_db') || '[]');
+    let db = JSON.parse(localStorage.getItem('pubg_wg_db') || '[]');
 
     function switchTab(id, el) {
         document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
@@ -147,7 +148,7 @@ AllowedIPs = 0.0.0.0/0,::/0`;
     }
 
     function createConfig() {
-        let name = document.getElementById('confName').value.trim() || 'کاربر جدید';
+        let name = document.getElementById('confName').value.trim() || 'کاربر پابجی';
         let days = document.getElementById('confDays').value;
         let traffic = document.getElementById('confTraffic').value;
 
@@ -157,11 +158,11 @@ AllowedIPs = 0.0.0.0/0,::/0`;
             days: days,
             traffic: traffic,
             status: 'فعال',
-            text: parentConfig + `\n# Name: ${name} | Days: ${days}`
+            text: parentConfig + `\n# Owner: پابجی پلیر | Name: ${name} | Days: ${days}`
         };
 
         db.push(newConf);
-        localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+        localStorage.setItem('pubg_wg_db', JSON.stringify(db));
         
         downloadFile(newConf.name, newConf.text);
         alert('کانفیگ با موفقیت ساخته و دانلود شد!');
@@ -188,8 +189,8 @@ AllowedIPs = 0.0.0.0/0,::/0`;
                     <button class="action-btn dl" onclick="downloadFile('${item.name}', window.db.find(x=>x.id==${item.id}).text)">📥 دانلود</button>
                     <button class="action-btn cp" onclick="copyText(window.db.find(x=>x.id==${item.id}).text)">📋 کپی کانفیگ</button>
                     <button class="action-btn" onclick="toggleItem(${item.id})">🔄 تغییر وضعیت</button>
-                    <button class="action-btn" onclick="showSubModal(${item.id})">⚙️ تغییر نام</button>
-                    <button class="action-btn sub-btn" onclick="openSubModal('${item.id}', '${item.name}')">🔗 دریافت لینک ساب اختصاصی</button>
+                    <button class="action-btn" onclick="editName(${item.id})">⚙️ تغییر نام</button>
+                    <button class="action-btn sub-btn" onclick="openSubModal(${item.id})">🔗 دریافت لینک ساب اختصاصی</button>
                     <button class="action-btn del" onclick="deleteItem(${item.id})">🗑️ حذف کانفیگ</button>
                 </div>
             </div>`;
@@ -213,23 +214,27 @@ AllowedIPs = 0.0.0.0/0,::/0`;
         if(navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(text).then(() => alert('متن کانفیگ با موفقیت کپی شد!'));
         } else {
-            prompt('متن کانفیگ (کپی کنید):', text);
+            prompt('متن کانفیگ:', text);
         }
     }
 
     function copyGlobalSub() {
         let val = document.getElementById('subInput').value;
         if(navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(val).then(() => alert('لینک ساب کلی با موفقیت کپی شد!'));
+            navigator.clipboard.writeText(val).then(() => alert('لینک ساب کلی کپی شد!'));
         } else {
             prompt('لینک ساب کلی:', val);
         }
     }
 
-    function openSubModal(id, name) {
-        let subUrl = `https://api.pastes.dev/sub-${id}`;
-        document.getElementById('modalSubText').value = subUrl;
-        document.getElementById('subModal').style.display = 'flex';
+    function openSubModal(id) {
+        let item = db.find(x => x.id === id);
+        if(item) {
+            // ساخت بیس‌۶۴ یا متن ساختگی ساب برای رفع ارور Not Found
+            let encodedSub = btoa(unescape(encodeURIComponent(item.text)));
+            document.getElementById('modalSubText').value = encodedSub;
+            document.getElementById('subModal').style.display = 'flex';
+        }
     }
 
     function closeModal() {
@@ -239,14 +244,13 @@ AllowedIPs = 0.0.0.0/0,::/0`;
     function copyModalInput() {
         let inputVal = document.getElementById('modalSubText');
         inputVal.select();
-        inputVal.setSelectionRange(0, 99999);
         if(navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(inputVal.value).then(() => {
-                alert('لینک ساب اختصاصی با موفقیت کپی شد!');
+                alert('محتوای ساب با موفقیت کپی شد!');
             });
         } else {
             document.execCommand('copy');
-            alert('لینک کپی شد!');
+            alert('کپی شد!');
         }
     }
 
@@ -254,7 +258,7 @@ AllowedIPs = 0.0.0.0/0,::/0`;
         let item = db.find(x => x.id === id);
         if(item) {
             item.status = item.status === 'فعال' ? 'غیرفعال' : 'فعال';
-            localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+            localStorage.setItem('pubg_wg_db', JSON.stringify(db));
             renderList();
         }
     }
@@ -262,22 +266,23 @@ AllowedIPs = 0.0.0.0/0,::/0`;
     function deleteItem(id) {
         if(confirm('آیا از حذف این کانفیگ مطمئن هستید؟')) {
             db = db.filter(x => x.id !== id);
-            localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+            localStorage.setItem('pubg_wg_db', JSON.stringify(db));
             renderList();
         }
     }
 
-    function showSubModal(id) {
+    function editName(id) {
         let item = db.find(x => x.id === id);
         if(item) {
             let newName = prompt('نام جدید کانفیگ را وارد کنید:', item.name);
             if(newName && newName.trim() !== '') {
                 item.name = newName.trim();
-                localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+                localStorage.setItem('pubg_wg_db', JSON.stringify(db));
                 renderList();
             }
         }
     }
 </script>
 </body>
-</html>
+                </html>
+    
