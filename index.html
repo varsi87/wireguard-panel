@@ -51,7 +51,7 @@
         .info-row { display: flex; justify-content: space-between; background: #181029; padding: 8px 10px; border-radius: 8px; margin-bottom: 6px; font-size: 0.75rem; border: 1px solid #33245a; }
         .info-label { color: #9ca3af; }
         .info-val { color: #fff; font-weight: bold; }
-        .config-box { width: 100%; background: #181029; border: 1px solid #33245a; border-radius: 8px; padding: 10px; color: #c084fc; font-size: 0.68rem; text-align: left; direction: ltr; margin-bottom: 8px; outline: none; height: 110px; resize: none; font-family: monospace; }
+        .config-box { width: 100%; background: #181029; border: 1px solid #33245a; border-radius: 8px; padding: 10px; color: #c084fc; font-size: 0.68rem; text-align: left; direction: ltr; margin-bottom: 8px; outline: none; height: 100px; resize: none; font-family: monospace; }
         .qr-container { background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
         .close-btn { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; width: 100%; }
     </style>
@@ -61,7 +61,7 @@
     <div class="card">
         <h1>پنل 🇦🇪 امارات</h1>
         <p>مدیریت کانفیگ‌های اختصاصی WireGuard</p>
-        <div class="badge">🟢 سرور اصلی • مالک: پابجی پلیر</div>
+        <div class="badge">🟢 سرور اصلی • مالک: پابجی پلیر[span_1](start_span)[span_1](end_span)</div>
     </div>
 
     <div class="tabs">
@@ -76,7 +76,7 @@
             <div class="title">📊 وضعیت کلی پنل</div>
             <p style="text-align: right;">سرور: امارات (پایداری عالی)</p>
             <p style="text-align: right;">تعداد کل کانفیگ‌ها: <span id="countBox">0</span></p>
-            <p style="text-align: right;">مالک: پابجی پلیر</p>
+            <p style="text-align: right;">مالک: پابجی پلیر[span_2](start_span)[span_2](end_span)</p>
         </div>
     </div>
 
@@ -86,7 +86,7 @@
             <div class="title">➕ ساخت کانفیگ جدید</div>
             <div class="group">
                 <label>نام کاربر / کانفیگ</label>
-                <input type="text" id="confName" value="مشتری 1">
+                <input type="text" id="confName" value="مشتری 3">
             </div>
             <div class="group">
                 <label>مدت اعتبار (روز)</label>
@@ -112,7 +112,7 @@
 <!-- Modal for Sub Link Style View -->
 <div id="subModal" class="modal">
     <div class="modal-box">
-        <div class="modal-title">ساب | پابجی پلیر</div>
+        <div class="modal-title">ساب | پابجی پلیر[span_3](start_span)[span_3](end_span)</div>
         
         <div class="info-row"><span class="info-label">نام</span><span class="info-val" id="mName">-</span></div>
         <div class="info-row"><span class="info-label">شناسه</span><span class="info-val" id="mId">-</span></div>
@@ -122,11 +122,11 @@
 
         <textarea id="mText" class="config-box" readonly onclick="this.select();"></textarea>
         
-        <button class="action-btn dl" style="width:100%; padding: 9px; font-size: 0.75rem; margin-bottom: 8px;" onclick="downloadModalFile()">📥 دانلود</button>
+        <button class="action-btn dl" style="width:100%; padding: 9px; font-size: 0.75rem; margin-bottom: 8px;" onclick="downloadModalFile()">📥 دانلود فایل کانفیگ</button>
         
         <div class="qr-container" id="qrcode"></div>
 
-        <div style="font-size: 0.65rem; color: #34d399; margin-bottom: 8px;">🟢 سرور اصلی • مالک: پابجی پلیر</div>
+        <div style="font-size: 0.65rem; color: #34d399; margin-bottom: 8px;">🟢 سرور اصلی • مالک: پابجی پلیر[span_4](start_span)[span_4](end_span)</div>
         <button class="close-btn" onclick="closeModal()">بستن صفحه</button>
     </div>
 </div>
@@ -197,7 +197,7 @@ Endpoint = 8.6.112.165:928`;
                 <div class="grid">
                     <button class="action-btn dl" onclick="downloadFile('${item.name}', window.db.find(x=>x.id==${item.id}).text)">📥 دانلود</button>
                     <button class="action-btn cp" onclick="copyText(window.db.find(x=>x.id==${item.id}).text)">📋 کپی</button>
-                    <button class="action-btn sub-btn" onclick="openSubModal(${item.id})">🔗 مشاهده لینک ساب و QR Code</button>
+                    <button class="action-btn sub-btn" onclick="openSubModal(${item.id})">🔗 لینک ساب و بارکد (QR)</button>
                     <button class="action-btn" onclick="toggleItem(${item.id})">🔄 تغییر وضعیت</button>
                     <button class="action-btn del" onclick="deleteItem(${item.id})">🗑️ حذف</button>
                 </div>
@@ -221,7 +221,7 @@ Endpoint = 8.6.112.165:928`;
             currentModalText = item.text;
             currentModalName = item.name;
 
-            // ساخت کیو آر کد
+            // ساخت QR Code دقیق و روان
             document.getElementById('qrcode').innerHTML = "";
             new QRCode(document.getElementById("qrcode"), {
                 text: item.text,
@@ -281,5 +281,5 @@ Endpoint = 8.6.112.165:928`;
     }
 </script>
 </body>
-            </html>
-            
+    </html>
+    
