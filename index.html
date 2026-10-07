@@ -62,14 +62,14 @@
     <div class="header-card">
         <h1>پنل 🇦🇪 امارات</h1>
         <p>پنل متصل به کانفیگ اصلی WireGuard | حجم پنل بر اساس سهم کانفیگ</p>
-        <div class="owner-badge"><i class="fa-solid fa-shield-halved"></i> مالک: WireGuard4582</div>
+        <div class="owner-badge"><i class="fa-solid fa-shield-halved"></i> مالک: Arsin</div>
     </div>
 
     <div class="nav-tabs">
-        <div class="nav-tab" onclick="switchTab('dashboard')">داشبورد</div>
-        <div class="nav-tab active" onclick="switchTab('create')">ساخت کانفیگ</div>
-        <div class="nav-tab" onclick="switchTab('configs')">کانفیگ‌ها</div>
-        <div class="nav-tab" onclick="switchTab('sub')">لینک ساب</div>
+        <div class="nav-tab" onclick="switchTab('dashboard', this)">داشبورد</div>
+        <div class="nav-tab active" onclick="switchTab('create', this)">ساخت کانفیگ</div>
+        <div class="nav-tab" onclick="switchTab('configs', this)">کانفیگ‌ها</div>
+        <div class="nav-tab" onclick="switchTab('sub', this)">لینک ساب</div>
     </div>
 
     <!-- داشبورد -->
@@ -77,59 +77,5 @@
         <div class="panel-card">
             <div class="section-title">📊 داشبورد این پنل</div>
             <p class="form-label" style="text-align: right; margin-bottom: 6px;">کشور: 🟢 سرور اصلی</p>
-            <p class="form-label" style="text-align: right; margin-bottom: 6px;">حجم: <span id="usedGb">237</span> GB / 8000 GB - باقی: <span id="remGb">7763</span> GB</p>
-            <p class="form-label" style="text-align: right; margin-bottom: 6px;">کانفیگ فعال: <span id="activeCount">0</span> / 12</p>
-            <p class="form-label" style="text-align: right;">مالک: WireGuard4582</p>
-        </div>
-    </div>
-
-    <!-- ساخت کانفیگ -->
-    <div id="create" class="tab-content active">
-        <div class="panel-card">
-            <div class="section-title">➕ ساخت کانفیگ پابجی</div>
-            <div class="form-group">
-                <label class="form-label">روز اعتبار</label>
-                <input type="number" id="newDays" value="30">
-            </div>
-            <div class="form-group">
-                <label class="form-label">کاربر</label>
-                <input type="text" id="newUserId" value="1">
-            </div>
-            <div class="form-group">
-                <label class="form-label">حجم (گیگ)</label>
-                <input type="number" id="newTraffic" value="50">
-            </div>
-            <div class="form-group">
-                <label class="form-label">نام (اختیاری)</label>
-                <input type="text" id="newUsername" placeholder="پابجی ویژه">
-            </div>
-            <button class="btn-gradient" onclick="generateConfig()">✨ ساخت + دانلود</button>
-        </div>
-    </div>
-
-    <!-- لیست کانفیگ‌ها -->
-    <div id="configs" class="tab-content">
-        <div class="panel-card">
-            <div class="section-title">📁 کانفیگ‌های ساخته‌شده</div>
-            <div id="configsList"><p style="color: var(--text-muted); font-size: 0.75rem;">هنوز کانفیگی ساخته نشده.</p></div>
-        </div>
-    </div>
-
-    <!-- لینک ساب -->
-    <div id="sub" class="tab-content">
-        <div class="panel-card">
-            <div class="section-title">🔗 دریافت لینک ساب</div>
-            <p class="form-label" style="text-align: right; margin-bottom: 8px;">از این بخش برای هر کانفیگ یا همه کانفیگ‌های فعال، لینک ساب بگیرید.</p>
-            <input type="text" id="subLinkDisplay" readonly value="https://api.pastes.dev/voa3gG8jWg" style="margin-bottom: 10px; font-size: 0.7rem;">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-                <button class="action-btn copy" onclick="copySubLink()" style="grid-column: span 2; padding: 10px;"><i class="fa-solid fa-copy"></i> کپی لینک</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal QR -->
-<div id="qrModal" class="modal">
-    <div class="modal-content">
-        <h3 style="font-size: 0.95rem; color: #fff;">بارکد QR کانفیگ</h3>
-        
+            
+    
