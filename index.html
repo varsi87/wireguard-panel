@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ساب | پابجی پلیر</title>
-    <!-- کتابخانه ساخت QR Code -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <title>پنل امارات | WireGuard</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
-        body { background-color: #170f2b; color: #f3f4f6; min-height: 100vh; padding: 10px; display: flex; justify-content: center; }
+        body { background-color: #0b0f19; color: #f3f4f6; min-height: 100vh; padding: 10px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 450px; }
-        .card { background: #23193f; border: 1px solid #33245a; border-radius: 14px; padding: 12px; margin-bottom: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+        .card { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 12px; margin-bottom: 10px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
         h1 { font-size: 1rem; color: #fff; margin-bottom: 4px; }
         p { font-size: 0.7rem; color: #9ca3af; margin-bottom: 6px; }
-        .badge { display: inline-block; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 2px 10px; border-radius: 15px; font-size: 0.68rem; font-weight: bold; }
+        .badge { display: inline-block; background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 10px; border-radius: 15px; font-size: 0.68rem; font-weight: bold; }
         
         .tabs { display: flex; gap: 4px; margin-bottom: 10px; }
-        .tab { flex: 1; background: #23193f; border: 1px solid #33245a; color: #9ca3af; padding: 8px 2px; border-radius: 8px; font-size: 0.72rem; cursor: pointer; text-align: center; }
-        .tab.active { background: #7c3aed; color: #fff; font-weight: bold; }
+        .tab { flex: 1; background: #111827; border: 1px solid #1f2937; color: #9ca3af; padding: 8px 2px; border-radius: 8px; font-size: 0.72rem; cursor: pointer; text-align: center; }
+        .tab.active { background: #3b82f6; color: #fff; font-weight: bold; }
         
         .content { display: none; }
         .content.active { display: block; }
@@ -25,35 +23,23 @@
         
         .group { margin-bottom: 8px; text-align: right; }
         label { display: block; font-size: 0.7rem; color: #9ca3af; margin-bottom: 3px; }
-        input { width: 100%; background: #181029; border: 1px solid #33245a; border-radius: 8px; padding: 9px; color: #fff; font-size: 0.8rem; outline: none; }
+        input, select { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 9px; color: #fff; font-size: 0.8rem; outline: none; }
         
-        .btn { width: 100%; background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: #fff; border: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
+        .btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); color: #fff; border: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
         
-        .item { background: #181029; border: 1px solid #33245a; border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right; }
+        .item { background: #0f172a; border: 1px solid #1f2937; border-radius: 10px; padding: 10px; margin-bottom: 8px; text-align: right; }
         .item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 0.8rem; font-weight: bold; }
         .item-sub { font-size: 0.65rem; color: #9ca3af; margin-bottom: 8px; }
         
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
-        .action-btn { background: #2a1b4e; border: 1px solid #33245a; color: #f3f4f6; padding: 7px 4px; border-radius: 6px; font-size: 0.68rem; cursor: pointer; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        .action-btn { background: #1e293b; border: 1px solid #1f2937; color: #f3f4f6; padding: 6px 2px; border-radius: 6px; font-size: 0.65rem; cursor: pointer; text-align: center; }
         .action-btn.dl { background: rgba(16, 185, 129, 0.2); color: #34d399; }
-        .action-btn.cp { background: rgba(124, 58, 237, 0.2); color: #c084fc; }
-        .action-btn.sub-btn { background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%); color: #fff; grid-column: span 2; font-weight: bold; }
-        .action-btn.del { background: rgba(239, 68, 68, 0.2); color: #f87171; grid-column: span 2; }
+        .action-btn.cp { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .action-btn.del { background: rgba(239, 68, 68, 0.2); color: #f87171; grid-column: span 3; }
         
         .status { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; }
         .status.on { background: rgba(16,185,129,0.2); color: #34d399; }
         .status.off { background: rgba(239,68,68,0.2); color: #f87171; }
-
-        /* Modal Styles */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; padding: 15px; overflow-y: auto; }
-        .modal-box { background: #23193f; border: 1px solid #33245a; border-radius: 14px; padding: 16px; width: 100%; max-width: 380px; text-align: center; max-height: 90vh; overflow-y: auto; }
-        .modal-title { font-size: 0.9rem; color: #fff; margin-bottom: 10px; font-weight: bold; }
-        .info-row { display: flex; justify-content: space-between; background: #181029; padding: 8px 10px; border-radius: 8px; margin-bottom: 6px; font-size: 0.75rem; border: 1px solid #33245a; }
-        .info-label { color: #9ca3af; }
-        .info-val { color: #fff; font-weight: bold; }
-        .config-box { width: 100%; background: #181029; border: 1px solid #33245a; border-radius: 8px; padding: 10px; color: #c084fc; font-size: 0.68rem; text-align: left; direction: ltr; margin-bottom: 8px; outline: none; height: 100px; resize: none; font-family: monospace; }
-        .qr-container { background: #fff; padding: 10px; border-radius: 10px; display: inline-block; margin-bottom: 10px; }
-        .close-btn { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
@@ -61,13 +47,14 @@
     <div class="card">
         <h1>پنل 🇦🇪 امارات</h1>
         <p>مدیریت کانفیگ‌های اختصاصی WireGuard</p>
-        <div class="badge">🟢 سرور اصلی • مالک: پابجی پلیر[span_1](start_span)[span_1](end_span)</div>
+        <div class="badge">🛡️ مالک: Arsin</div>
     </div>
 
     <div class="tabs">
         <div class="tab" onclick="switchTab('dash', this)">داشبورد</div>
         <div class="tab active" onclick="switchTab('make', this)">ساخت کانفیگ</div>
         <div class="tab" onclick="switchTab('list', this)">کانفیگ‌ها</div>
+        <div class="tab" onclick="switchTab('sub', this)">لینک ساب</div>
     </div>
 
     <!-- داشبورد -->
@@ -75,8 +62,8 @@
         <div class="card">
             <div class="title">📊 وضعیت کلی پنل</div>
             <p style="text-align: right;">سرور: امارات (پایداری عالی)</p>
-            <p style="text-align: right;">تعداد کل کانفیگ‌ها: <span id="countBox">0</span></p>
-            <p style="text-align: right;">مالک: پابجی پلیر[span_2](start_span)[span_2](end_span)</p>
+            <p style="text-align: right;">کل مصرف: 237 گیگ از 8000 گیگ</p>
+            <p style="text-align: right;">تعداد کانفیگ‌ها: <span id="countBox">0</span></p>
         </div>
     </div>
 
@@ -85,8 +72,8 @@
         <div class="card">
             <div class="title">➕ ساخت کانفیگ جدید</div>
             <div class="group">
-                <label>نام کاربر / کانفیگ</label>
-                <input type="text" id="confName" value="مشتری 3">
+                <label>نام کانفیگ (مثلا پابجی ویژه)</label>
+                <input type="text" id="confName" value="پابجی آرشین">
             </div>
             <div class="group">
                 <label>مدت اعتبار (روز)</label>
@@ -94,9 +81,9 @@
             </div>
             <div class="group">
                 <label>حجم (گیگابایت)</label>
-                <input type="number" id="confTraffic" value="10">
+                <input type="number" id="confTraffic" value="50">
             </div>
-            <button class="btn" onclick="createConfig()">✨ ساخت کانفیگ</button>
+            <button class="btn" onclick="createConfig()">✨ ساخت و دانلود کانفیگ</button>
         </div>
     </div>
 
@@ -107,43 +94,29 @@
             <div id="configsContainer"><p style="color: #9ca3af; font-size: 0.7rem;">هنوز کانفیگی ساخته نشده است.</p></div>
         </div>
     </div>
-</div>
 
-<!-- Modal for Sub Link Style View -->
-<div id="subModal" class="modal">
-    <div class="modal-box">
-        <div class="modal-title">ساب | پابجی پلیر[span_3](start_span)[span_3](end_span)</div>
-        
-        <div class="info-row"><span class="info-label">نام</span><span class="info-val" id="mName">-</span></div>
-        <div class="info-row"><span class="info-label">شناسه</span><span class="info-val" id="mId">-</span></div>
-        <div class="info-row"><span class="info-label">حجم</span><span class="info-val" id="mTraffic">-</span></div>
-        <div class="info-row"><span class="info-label">لوکیشن</span><span class="info-val">🟢 سرور اصلی</span></div>
-        <div class="info-row"><span class="info-label">وضعیت</span><span class="info-val" style="color:#34d399">فعال</span></div>
-
-        <textarea id="mText" class="config-box" readonly onclick="this.select();"></textarea>
-        
-        <button class="action-btn dl" style="width:100%; padding: 9px; font-size: 0.75rem; margin-bottom: 8px;" onclick="downloadModalFile()">📥 دانلود فایل کانفیگ</button>
-        
-        <div class="qr-container" id="qrcode"></div>
-
-        <div style="font-size: 0.65rem; color: #34d399; margin-bottom: 8px;">🟢 سرور اصلی • مالک: پابجی پلیر[span_4](start_span)[span_4](end_span)</div>
-        <button class="close-btn" onclick="closeModal()">بستن صفحه</button>
+    <!-- لینک ساب -->
+    <div id="sub" class="content">
+        <div class="card">
+            <div class="title">🔗 لینک اشتراک (Subscription)</div>
+            <input type="text" id="subInput" readonly value="https://api.pastes.dev/arsin-wg-sub" style="margin-bottom: 8px; font-size: 0.68rem;">
+            <button class="action-btn cp" style="width:100%; padding: 10px; font-size: 0.75rem;" onclick="copySub()">کپی لینک ساب کلی</button>
+        </div>
     </div>
 </div>
 
 <script>
     const parentConfig = `[Interface]
-PrivateKey = YFXWfXouBavdqCDr4d1UHL+UK9Xj1y0y5kmTQDGxSGU=
-Address = 172.16.0.2/32
-DNS = 1.1.1.1, 8.8.8.8
-MTU = 1320
+PrivateKey = ABFU4WRDb7WZ8zDVkmegu3F1GBRaeUJh=8b9a02jUI=
+Address = 192.168.72.77/32
+DNS = 1.1.1.1,8.8.8.8
 
 [Peer]
-PublicKey = bmX0C+F1FXeMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
-AllowedIPs = 0.0.0.0/0
-Endpoint = 8.6.112.165:928`;
+PublicKey = rtKJ7YW0UBdvgb5by+ojafsFOUf0Y3MziiaWLL0ytkY=
+Endpoint = t1wire.steelping.ir:58531
+AllowedIPs = 0.0.0.0/0,::/0`;
 
-    let db = JSON.parse(localStorage.getItem('pubg_wg_db') || '[]');
+    let db = JSON.parse(localStorage.getItem('arsin_wg_db') || '[]');
 
     function switchTab(id, el) {
         document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
@@ -154,27 +127,27 @@ Endpoint = 8.6.112.165:928`;
     }
 
     function createConfig() {
-        let name = document.getElementById('confName').value.trim() || 'مشتری جدید';
+        let name = document.getElementById('confName').value.trim() || 'کاربر جدید';
         let days = document.getElementById('confDays').value;
         let traffic = document.getElementById('confTraffic').value;
-        let randomId = Math.random().toString(36).substring(2, 11);
-
-        let fullText = `# Gaming WireGuard | Owner: پابجی پلیر\n# Name: ${name}\n# Volume: ${traffic} GB\n# Time: ${days} days\n\n` + parentConfig;
 
         let newConf = {
             id: Date.now(),
-            randId: randomId,
             name: name,
             days: days,
             traffic: traffic,
             status: 'فعال',
-            text: fullText
+            text: parentConfig + `\n# Name: ${name} | Days: ${days}`
         };
 
         db.push(newConf);
-        localStorage.setItem('pubg_wg_db', JSON.stringify(db));
+        localStorage.setItem('arsin_wg_db', JSON.stringify(db));
         
-        alert('کانفیگ با موفقیت ساخته شد!');
+        // دانلود خودکار فایل
+        downloadFile(newConf.name, newConf.text);
+        alert('کانفیگ با موفقیت ساخته شد و دانلود شد!');
+        
+        // جابجایی به صفحه لیست
         document.querySelectorAll('.tab')[2].click();
     }
 
@@ -193,55 +166,17 @@ Endpoint = 8.6.112.165:928`;
                     <span>🎮 ${item.name}</span>
                     <span class="status ${stClass}">${item.status}</span>
                 </div>
-                <div class="item-sub">⏳ ${item.days} روز • 📦 ${item.traffic} GB</div>
+                <div class="item-sub">⏳ ${item.days} روز • 📦 ${item.traffic} گیگ</div>
                 <div class="grid">
                     <button class="action-btn dl" onclick="downloadFile('${item.name}', window.db.find(x=>x.id==${item.id}).text)">📥 دانلود</button>
                     <button class="action-btn cp" onclick="copyText(window.db.find(x=>x.id==${item.id}).text)">📋 کپی</button>
-                    <button class="action-btn sub-btn" onclick="openSubModal(${item.id})">🔗 لینک ساب و بارکد (QR)</button>
                     <button class="action-btn" onclick="toggleItem(${item.id})">🔄 تغییر وضعیت</button>
-                    <button class="action-btn del" onclick="deleteItem(${item.id})">🗑️ حذف</button>
+                    <button class="action-btn del" onclick="deleteItem(${item.id})">🗑️ حذف کانفیگ</button>
                 </div>
             </div>`;
         });
         container.innerHTML = html;
         window.db = db;
-    }
-
-    let currentModalText = '';
-    let currentModalName = '';
-
-    function openSubModal(id) {
-        let item = db.find(x => x.id === id);
-        if(item) {
-            document.getElementById('mName').innerText = item.name;
-            document.getElementById('mId').innerText = item.randId || 'cfg' + item.id;
-            document.getElementById('mTraffic').innerText = item.traffic + ' GB';
-            document.getElementById('mText').value = item.text;
-            
-            currentModalText = item.text;
-            currentModalName = item.name;
-
-            // ساخت QR Code دقیق و روان
-            document.getElementById('qrcode').innerHTML = "";
-            new QRCode(document.getElementById("qrcode"), {
-                text: item.text,
-                width: 140,
-                height: 140,
-                colorDark: "#000000",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
-
-            document.getElementById('subModal').style.display = 'flex';
-        }
-    }
-
-    function closeModal() {
-        document.getElementById('subModal').style.display = 'none';
-    }
-
-    function downloadModalFile() {
-        downloadFile(currentModalName, currentModalText);
     }
 
     function downloadFile(filename, content) {
@@ -256,18 +191,14 @@ Endpoint = 8.6.112.165:928`;
     }
 
     function copyText(text) {
-        if(navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(() => alert('متن کانفیگ کپی شد!'));
-        } else {
-            prompt('متن کانفیگ:', text);
-        }
+        navigator.clipboard.writeText(text).then(() => alert('کانفیگ با موفقیت کپی شد!'));
     }
 
     function toggleItem(id) {
         let item = db.find(x => x.id === id);
         if(item) {
             item.status = item.status === 'فعال' ? 'غیرفعال' : 'فعال';
-            localStorage.setItem('pubg_wg_db', JSON.stringify(db));
+            localStorage.setItem('arsin_wg_db', JSON.stringify(db));
             renderList();
         }
     }
@@ -275,11 +206,14 @@ Endpoint = 8.6.112.165:928`;
     function deleteItem(id) {
         if(confirm('آیا از حذف این کانفیگ مطمئن هستید؟')) {
             db = db.filter(x => x.id !== id);
-            localStorage.setItem('pubg_wg_db', JSON.stringify(db));
+            localStorage.setItem('arsin_wg_db', JSON.stringify(db));
             renderList();
         }
     }
+
+    function copySub() {
+        navigator.clipboard.writeText(document.getElementById('subInput').value).then(() => alert('لینک ساب کپی شد!'));
+    }
 </script>
 </body>
-    </html>
-    
+</html>
