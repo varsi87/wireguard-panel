@@ -2,49 +2,67 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>پنل متصل به کانفیگ اصلی | WireGuard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل امارات | WireGuard</title>
+    <!-- Font & Icons -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { font-family: Tahoma, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; text-align: center; }
-        .box { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; border-radius: 6px; border: none; background: #334155; color: white; box-sizing: border-box; }
-        button { background: #3b82f6; cursor: pointer; font-weight: bold; }
-        button:hover { background: #2563eb; }
-        textarea { height: 100px; font-family: monospace; direction: ltr; }
-        pre { background: #0f172a; padding: 10px; border-radius: 6px; text-align: left; direction: ltr; overflow-x: auto; }
-    </style>
-</head>
-<body>
-    <div class="box">
-        <h2>پنل متصل به کانفیگ اصلی</h2>
-        <p style="font-size: 13px; color: #94a3b8;">WireGuard | حجم پنل بر اساس سهم کانفیگ</p>
-        
-        <label>محتوای کانفیگ وایرگارد اصلی (مادر):</label>
-        <textarea id="parentConfig" placeholder="[Interface]&#10;PrivateKey = ...&#10;Address = ..."></textarea>
-        
-        <label>نام کاربر جدید:</label>
-        <input type="text" id="userName" placeholder="مثلا: User_1">
-        
-        <button onclick="generateConfig()">ساخت کانفیگ زیرمجموعه</button>
-        
-        <h3>خروجی کانفیگ:</h3>
-        <pre id="output">هنوز کانفیجی ساخته نشده است...</pre>
-    </div>
-
-    <script>
-        function generateConfig() {
-            const parent = document.getElementById('parentConfig').value;
-            const name = document.getElementById('userName').value || 'User';
-            
-            if(!parent) {
-                alert('لطفاً کانفیگ مادر وایرگارد را وارد کنید!');
-                return;
-            }
-
-            // شبیه‌سازی و تولید ساختار زیرمجموعه متصل به سهم مادر
-            const childConfig = `# Linked to WireGuard Parent Config\n# User: ${name}\n# Traffic: Shared with Parent\n\n` + parent + `\n# Note: Peer IP managed by parent gateway`;
-            
-            document.getElementById('output').innerText = childConfig;
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --card-border: #1f2937;
+            --primary: #3b82f6;
+            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success: #10b981;
+            --danger: #ef4444;
         }
-    </script>
-</body>
-</html>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+        /* Header Banner */
+        .header-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .header-card h1 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+        .header-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+        .owner-badge {
+            display: inline-block;
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1
+        
