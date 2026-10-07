@@ -23,7 +23,7 @@
         
         .group { margin-bottom: 8px; text-align: right; }
         label { display: block; font-size: 0.7rem; color: #9ca3af; margin-bottom: 3px; }
-        input, select { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 9px; color: #fff; font-size: 0.8rem; outline: none; }
+        input { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 9px; color: #fff; font-size: 0.8rem; outline: none; }
         
         .btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); color: #fff; border: none; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
         
@@ -31,15 +31,23 @@
         .item-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 0.8rem; font-weight: bold; }
         .item-sub { font-size: 0.65rem; color: #9ca3af; margin-bottom: 8px; }
         
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-        .action-btn { background: #1e293b; border: 1px solid #1f2937; color: #f3f4f6; padding: 6px 2px; border-radius: 6px; font-size: 0.65rem; cursor: pointer; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; }
+        .action-btn { background: #1e293b; border: 1px solid #1f2937; color: #f3f4f6; padding: 7px 4px; border-radius: 6px; font-size: 0.68rem; cursor: pointer; text-align: center; }
         .action-btn.dl { background: rgba(16, 185, 129, 0.2); color: #34d399; }
         .action-btn.cp { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
-        .action-btn.del { background: rgba(239, 68, 68, 0.2); color: #f87171; grid-column: span 3; }
+        .action-btn.sub-btn { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: #fff; grid-column: span 2; font-weight: bold; }
+        .action-btn.del { background: rgba(239, 68, 68, 0.2); color: #f87171; grid-column: span 2; }
         
         .status { font-size: 0.65rem; padding: 2px 6px; border-radius: 4px; }
         .status.on { background: rgba(16,185,129,0.2); color: #34d399; }
         .status.off { background: rgba(239,68,68,0.2); color: #f87171; }
+
+        /* Modal Styles */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; padding: 15px; }
+        .modal-box { background: #111827; border: 1px solid #1f2937; border-radius: 14px; padding: 16px; width: 100%; max-width: 380px; text-align: center; }
+        .modal-title { font-size: 0.9rem; color: #fff; margin-bottom: 10px; font-weight: bold; }
+        .modal-input { width: 100%; background: #0f172a; border: 1px solid #1f2937; border-radius: 8px; padding: 10px; color: #38bdf8; font-size: 0.75rem; text-align: center; margin-bottom: 10px; outline: none; }
+        .close-btn { background: #ef4444; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; width: 100%; }
     </style>
 </head>
 <body>
@@ -98,10 +106,22 @@
     <!-- لینک ساب -->
     <div id="sub" class="content">
         <div class="card">
-            <div class="title">🔗 لینک اشتراک (Subscription)</div>
-            <input type="text" id="subInput" readonly value="https://api.pastes.dev/arsin-wg-sub" style="margin-bottom: 8px; font-size: 0.68rem;">
-            <button class="action-btn cp" style="width:100%; padding: 10px; font-size: 0.75rem;" onclick="copySub()">کپی لینک ساب کلی</button>
+            <div class="title">🔗 لینک اشتراک (Subscription) کلی</div>
+            <p style="text-align: right; margin-bottom: 6px;">لینک زیر تمام کانفیگ‌های فعال شما را به صورت ساب‌پکیج پوشش می‌دهد:</p>
+            <input type="text" id="subInput" readonly value="https://api.pastes.dev/arsin-wg-sub" style="margin-bottom: 8px; font-size: 0.7rem; text-align: center; color: #38bdf8;">
+            <button class="action-btn cp" style="width:100%; padding: 10px; font-size: 0.75rem;" onclick="copyGlobalSub()">📋 کپی لینک ساب کلی</button>
         </div>
+    </div>
+</div>
+
+<!-- Modal for Sub Link -->
+<div id="subModal" class="modal">
+    <div class="modal-box">
+        <div class="modal-title">🔗 لینک ساب اختصاصی کانفیگ</div>
+        <p style="font-size: 0.68rem; color: #9ca3af; margin-bottom: 6px;">متن زیر را کپی کرده یا در اپلیکیشن وارد کنید:</p>
+        <input type="text" id="modalSubText" class="modal-input" readonly onclick="this.select();">
+        <button class="action-btn cp" style="width:100%; padding: 9px; font-size: 0.75rem; margin-bottom: 8px;" onclick="copyModalInput()">📋 کپی کردن لینک ساب</button>
+        <button class="close-btn" onclick="closeModal()">بستن</button>
     </div>
 </div>
 
@@ -143,11 +163,8 @@ AllowedIPs = 0.0.0.0/0,::/0`;
         db.push(newConf);
         localStorage.setItem('arsin_wg_db', JSON.stringify(db));
         
-        // دانلود خودکار فایل
         downloadFile(newConf.name, newConf.text);
-        alert('کانفیگ با موفقیت ساخته شد و دانلود شد!');
-        
-        // جابجایی به صفحه لیست
+        alert('کانفیگ با موفقیت ساخته و دانلود شد!');
         document.querySelectorAll('.tab')[2].click();
     }
 
@@ -169,8 +186,10 @@ AllowedIPs = 0.0.0.0/0,::/0`;
                 <div class="item-sub">⏳ ${item.days} روز • 📦 ${item.traffic} گیگ</div>
                 <div class="grid">
                     <button class="action-btn dl" onclick="downloadFile('${item.name}', window.db.find(x=>x.id==${item.id}).text)">📥 دانلود</button>
-                    <button class="action-btn cp" onclick="copyText(window.db.find(x=>x.id==${item.id}).text)">📋 کپی</button>
+                    <button class="action-btn cp" onclick="copyText(window.db.find(x=>x.id==${item.id}).text)">📋 کپی کانفیگ</button>
                     <button class="action-btn" onclick="toggleItem(${item.id})">🔄 تغییر وضعیت</button>
+                    <button class="action-btn" onclick="showSubModal(${item.id})">⚙️ تغییر نام</button>
+                    <button class="action-btn sub-btn" onclick="openSubModal('${item.id}', '${item.name}')">🔗 دریافت لینک ساب اختصاصی</button>
                     <button class="action-btn del" onclick="deleteItem(${item.id})">🗑️ حذف کانفیگ</button>
                 </div>
             </div>`;
@@ -191,7 +210,44 @@ AllowedIPs = 0.0.0.0/0,::/0`;
     }
 
     function copyText(text) {
-        navigator.clipboard.writeText(text).then(() => alert('کانفیگ با موفقیت کپی شد!'));
+        if(navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(() => alert('متن کانفیگ با موفقیت کپی شد!'));
+        } else {
+            prompt('متن کانفیگ (کپی کنید):', text);
+        }
+    }
+
+    function copyGlobalSub() {
+        let val = document.getElementById('subInput').value;
+        if(navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(val).then(() => alert('لینک ساب کلی با موفقیت کپی شد!'));
+        } else {
+            prompt('لینک ساب کلی:', val);
+        }
+    }
+
+    function openSubModal(id, name) {
+        let subUrl = `https://api.pastes.dev/sub-${id}`;
+        document.getElementById('modalSubText').value = subUrl;
+        document.getElementById('subModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+        document.getElementById('subModal').style.display = 'none';
+    }
+
+    function copyModalInput() {
+        let inputVal = document.getElementById('modalSubText');
+        inputVal.select();
+        inputVal.setSelectionRange(0, 99999);
+        if(navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(inputVal.value).then(() => {
+                alert('لینک ساب اختصاصی با موفقیت کپی شد!');
+            });
+        } else {
+            document.execCommand('copy');
+            alert('لینک کپی شد!');
+        }
     }
 
     function toggleItem(id) {
@@ -211,8 +267,16 @@ AllowedIPs = 0.0.0.0/0,::/0`;
         }
     }
 
-    function copySub() {
-        navigator.clipboard.writeText(document.getElementById('subInput').value).then(() => alert('لینک ساب کپی شد!'));
+    function showSubModal(id) {
+        let item = db.find(x => x.id === id);
+        if(item) {
+            let newName = prompt('نام جدید کانفیگ را وارد کنید:', item.name);
+            if(newName && newName.trim() !== '') {
+                item.name = newName.trim();
+                localStorage.setItem('arsin_wg_db', JSON.stringify(db));
+                renderList();
+            }
+        }
     }
 </script>
 </body>
