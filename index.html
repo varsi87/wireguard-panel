@@ -4,65 +4,174 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>پنل امارات | WireGuard</title>
-    <!-- Font & Icons -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
-            --bg-color: #0b0f19;
-            --card-bg: #111827;
-            --card-border: #1f2937;
-            --primary: #3b82f6;
-            --primary-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            --accent-gradient: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --success: #10b981;
-            --danger: #ef4444;
+            --bg-color: #0b0f19; --card-bg: #111827; --card-border: #1f2937;
+            --primary: #3b82f6; --text-main: #f3f4f6; --text-muted: #9ca3af;
+            --success: #10b981; --danger: #ef4444;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); min-height: 100vh; padding: 15px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 480px; }
+        .header-card, .panel-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); text-align: center; }
+        .header-card h1 { font-size: 1.2rem; margin-bottom: 8px; color: #fff; }
+        .header-card p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
+        .owner-badge { display: inline-block; background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .nav-tabs { display: flex; gap: 8px; margin-bottom: 15px; }
+        .nav-tab { flex: 1; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-muted); padding: 10px 8px; border-radius: 12px; font-size: 0.8rem; cursor: pointer; text-align: center; }
+        .nav-tab.active { background: var(--primary); color: #fff; font-weight: bold; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .section-title { font-size: 0.95rem; margin-bottom: 12px; color: #fff; text-align: right; }
+        .form-group { margin-bottom: 12px; text-align: right; }
+        .form-label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+        textarea, input { width: 100%; background: #0f172a; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px; color: #fff; font-size: 0.85rem; outline: none; }
+        .btn { width: 100%; background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); color: #fff; border: none; padding: 12px; border-radius: 10px; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
+        .config-item { background: #0f172a; border: 1px solid var(--card-border); border-radius: 12px; padding: 12px; margin-bottom: 10px; text-align: right; }
+        .config-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.85rem; font-weight: bold; }
+        .config-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; }
+        .action-btn { background: #1e293b; border: 1px solid var(--card-border); color: var(--text-main); padding: 8px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .action-btn.download { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .action-btn.copy { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .action-btn.qr { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: var(--card-bg); padding: 20px; border-radius: 16px; text-align: center; border: 1px solid var(--card-border); }
+        #qrcode { background: #fff; padding: 10px; border-radius: 8px; display: inline-block; margin: 15px 0; }
+        .close-modal { background: var(--danger); color: #fff; border: none; padding: 8px 20px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header-card">
+        <h1>پنل 🇦🇪 امارات</h1>
+        <p>پنل متصل به کانفیگ اصلی WireGuard</p>
+        <div class="owner-badge"><i class="fa-solid fa-shield-halved"></i> مالک: WireGuard4582</div>
+    </div>
+    <div class="nav-tabs">
+        <div class="nav-tab active" onclick="switchTab('dashboard')">داشبورد</div>
+        <div class="nav-tab" onclick="switchTab('create')">ساخت</div>
+        <div class="nav-tab" onclick="switchTab('configs')">کانفیگ‌ها</div>
+        <div class="nav-tab" onclick="switchTab('sub')">لینک ساب</div>
+    </div>
+    <div id="dashboard" class="tab-content active">
+        <div class="panel-card">
+            <div class="section-title">📊 وضعیت سرور</div>
+            <p class="form-label">کشور: امارات (فعال)</p>
+            <p class="form-label" style="margin-top: 8px;">حجم: 237GB از 8000GB</p>
+            <p class="form-label" style="margin-top: 8px;">تعداد کانفیگ‌های فعال: <span id="activeCount">0</span></p>
+        </div>
+    </div>
+    <div id="create" class="tab-content">
+        <div class="panel-card">
+            <div class="section-title">➕ ساخت کانفیگ جدید</div>
+            <div class="form-group">
+                <label class="form-label">کانفیگ مادر (Interface & Peer):</label>
+                <textarea id="parentConfig" rows="5" placeholder="[Interface]..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">نام مشتری:</label>
+                <input type="text" id="newUsername" placeholder="مثلا: مشتری ۱">
+            </div>
+            <button class="btn" onclick="generateConfig()">تایید و ساخت فایل</button>
+        </div>
+    </div>
+    <div id="configs" class="tab-content">
+        <div class="panel-card">
+            <div class="section-title">📁 لیست کانفیگ‌ها</div>
+            <div id="configsList"><p style="color: var(--text-muted); font-size: 0.8rem;">هنوز کانفیگی ساخته نشده.</p></div>
+        </div>
+    </div>
+    <div id="sub" class="tab-content">
+        <div class="panel-card">
+            <div class="section-title">🔗 لینک ساب‌اسکریپشن</div>
+            <input type="text" id="subLinkDisplay" readonly value="لینک خالی" style="margin-bottom: 10px; font-size: 0.75rem;">
+            <button class="btn" onclick="copySubLink()">کپی لینک کلی</button>
+        </div>
+    </div>
+</div>
+<div id="qrModal" class="modal">
+    <div class="modal-content">
+        <h3 style="font-size: 1rem; color: #fff;">بارکد QR</h3>
+        <div id="qrcode"></div><br>
+        <button class="close-modal" onclick="closeQrModal()">بستن</button>
+    </div>
+</div>
+<script>
+    let configs = JSON.parse(localStorage.getItem('wg_configs') || '[]');
+    function switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+        if(tabId === 'configs') renderConfigs();
+    }
+    function generateConfig() {
+        const parent = document.getElementById('parentConfig').value.trim();
+        const username = document.getElementById('newUsername').value.trim();
+        if(!parent || !username) { alert('اطلاعات کامل نیست!'); return; }
+        let clientConfig = parent.replace(/Address\s*=\s*([0-9\.]+)\/\d+/, (m, ip) => {
+            let p = ip.split('.'); p[3] = Math.floor(Math.random() * 200) + 10;
+            return `Address = ${p.join('.')}/32`;
+        });
+        configs.push({ id: Date.now(), name: username, content: clientConfig, date: new Date().toLocaleDateString('fa-IR') });
+        localStorage.setItem('wg_configs', JSON.stringify(configs));
+        document.getElementById('newUsername').value = '';
+        alert('ساخته شد!');
+        switchTab('configs');
+    }
+    function renderConfigs() {
+        const listDiv = document.getElementById('configsList');
+        document.getElementById('activeCount').innerText = configs.length;
+        if(configs.length === 0) { listDiv.innerHTML = `<p style="color: var(--text-muted); font-size: 0.8rem;">هنوز کانفیگی ساخته نشده.</p>`; return; }
+        let html = '';
+        configs.forEach(cfg => {
+            html += `<div class="config-item">
+                <div class="config-header"><span>🎮 ${cfg.name}</span><span style="font-size:0.7rem; color:var(--text-muted);">${cfg.date}</span></div>
+                <div class="config-actions">
+                    <button class="action-btn download" onclick="downloadConf(${cfg.id})"><i class="fa-solid fa-download"></i> دانلود</button>
+                    <button class="action-btn copy" onclick="copyConfig(${cfg.id})"><i class="fa-solid fa-copy"></i> کپی</button>
+                    <button class="action-btn qr" onclick="showQr(${cfg.id})"><i class="fa-solid fa-qrcode"></i> بارکد</button>
+                    <button class="action-btn" style="color:var(--danger)" onclick="deleteConfig(${cfg.id})"><i class="fa-solid fa-trash"></i> حذف</button>
+                </div></div>`;
+        });
+        listDiv.innerHTML = html;
+        document.getElementById('subLinkDisplay').value = window.location.href + '#sub-' + configs.length;
+    }
+    function downloadConf(id) {
+        const cfg = configs.find(c => c.id === id);
+        if(!cfg) return;
+        const blob = new Blob([cfg.content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = `${cfg.name}-wg.conf`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    function copyConfig(id) {
+        const cfg = configs.find(c => c.id === id);
+        if(!cfg) return;
+        navigator.clipboard.writeText(cfg.content).then(() => alert('کپی شد!'));
+    }
+    function showQr(id) {
+        const cfg = configs.find(c => c.id === id);
+        if(!cfg) return;
+        document.getElementById('qrcode').innerHTML = '';
+        document.getElementById('qrModal').style.display = 'flex';
+        new QRCode(document.getElementById("qrcode"), { text: cfg.content, width: 160, height: 160 });
+    }
+    function closeQrModal() { document.getElementById('qrModal').style.display = 'none'; }
+    function copySubLink() {
+        navigator.clipboard.writeText(document.getElementById('subLinkDisplay').value).then(() => alert('لینک ساب کپی شد!'));
+    }
+    function deleteConfig(id) {
+        if(confirm('حذف شود؟')) {
+            configs = configs.filter(c => c.id !== id);
+            localStorage.setItem('wg_configs', JSON.stringify(configs));
+            renderConfigs();
         }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-        }
-        .container {
-            width: 100%;
-            max-width: 480px;
-        }
-        /* Header Banner */
-        .header-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        }
-        .header-card h1 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-        .header-card p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-        }
-        .owner-badge {
-            display: inline-block;
-            background: rgba(245, 158, 11, 0.1);
-            color: #f59e0b;
-            border: 1
-        
+    }
+    window.onload = renderConfigs;
+</script>
+</body>
+</html>
