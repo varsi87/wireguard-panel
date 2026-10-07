@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>پنل متصل به کانفیگ اصلی | WireGuard</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; text-align: center; }
+        .box { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 500px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        input, textarea, button { width: 100%; margin-top: 10px; padding: 10px; border-radius: 6px; border: none; background: #334155; color: white; box-sizing: border-box; }
+        button { background: #3b82f6; cursor: pointer; font-weight: bold; }
+        button:hover { background: #2563eb; }
+        textarea { height: 100px; font-family: monospace; direction: ltr; }
+        pre { background: #0f172a; padding: 10px; border-radius: 6px; text-align: left; direction: ltr; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>پنل متصل به کانفیگ اصلی</h2>
+        <p style="font-size: 13px; color: #94a3b8;">WireGuard | حجم پنل بر اساس سهم کانفیگ</p>
+        
+        <label>محتوای کانفیگ وایرگارد اصلی (مادر):</label>
+        <textarea id="parentConfig" placeholder="[Interface]&#10;PrivateKey = ...&#10;Address = ..."></textarea>
+        
+        <label>نام کاربر جدید:</label>
+        <input type="text" id="userName" placeholder="مثلا: User_1">
+        
+        <button onclick="generateConfig()">ساخت کانفیگ زیرمجموعه</button>
+        
+        <h3>خروجی کانفیگ:</h3>
+        <pre id="output">هنوز کانفیجی ساخته نشده است...</pre>
+    </div>
+
+    <script>
+        function generateConfig() {
+            const parent = document.getElementById('parentConfig').value;
+            const name = document.getElementById('userName').value || 'User';
+            
+            if(!parent) {
+                alert('لطفاً کانفیگ مادر وایرگارد را وارد کنید!');
+                return;
+            }
+
+            // شبیه‌سازی و تولید ساختار زیرمجموعه متصل به سهم مادر
+            const childConfig = `# Linked to WireGuard Parent Config\n# User: ${name}\n# Traffic: Shared with Parent\n\n` + parent + `\n# Note: Peer IP managed by parent gateway`;
+            
+            document.getElementById('output').innerText = childConfig;
+        }
+    </script>
+</body>
+</html>
