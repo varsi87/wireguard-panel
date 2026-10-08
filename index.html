@@ -38,7 +38,6 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 .quota{height:8px;border-radius:999px;background:#0f172a;overflow:hidden;margin-top:6px;border:1px solid rgba(255,255,255,0.08)}
 .quota>div{height:100%;border-radius:999px}
-.owner{color:#a78bfa;font-size:0.85rem;font-weight:700}
 .note{font-size:0.78rem;color:var(--muted);margin-top:10px;padding:10px;background:rgba(34,197,94,0.1);border-radius:8px;border-right:3px solid #22c55e}
 </style>
 </head>
@@ -46,58 +45,43 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 <div class="wrap">
   <header>
     <h1>🎮 پنل تخصصی گیمینگ | WireGuard</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">بهینه‌شده برای پینگ پایین و اجرای بی‌نقص بازی‌ها (پابجی)</p>
-    <span class="badge">مخصوص گیم</span>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">رفع خطای نام و بهینه‌شده برای بازی</p>
+    <span class="badge">مخصوص پابجی</span>
   </header>
 
   <div class="nav">
     <button type="button" class="active" data-tab="dash">📊 داشبورد</button>
     <button type="button" data-tab="create">➕ ساخت کانفیگ گیم</button>
     <button type="button" data-tab="configs">📂 کانفیگ‌ها</button>
-    <button type="button" data-tab="sub">🔗 لینک ساب</button>
   </div>
 
   <div id="tab-dash" class="tab active">
     <div class="card">
-      <h2>📊 داشبورد پنل گیمینگ</h2>
+      <h2>📊 وضعیت پنل</h2>
       <div class="meta" id="statusMeta">...</div>
       <div class="quota"><div id="quotaFill" style="width:0%"></div></div>
-      <div id="dashList" style="margin-top:12px"></div>
     </div>
   </div>
 
   <div id="tab-create" class="tab">
     <div class="card">
-      <h2>➕ ساخت کانفیگ ویژه بازی (پابجی)</h2>
+      <h2>➕ ساخت کانفیگ جدید (نام انگلیسی)</h2>
       <div class="row">
         <div><label>روز اعتبار</label><input type="number" id="cfgDays" min="1" max="365" value="30"/></div>
         <div><label>کاربر</label><input type="number" id="cfgUsers" min="1" max="50" value="1"/></div>
         <div><label>حجم (گیگ)</label><input type="number" id="cfgGB" min="1" max="1000" value="50"/></div>
       </div>
-      <label>نام کانفیگ</label>
-      <input type="text" id="cfgName" placeholder="پابجی پینگ پایین"/>
-      <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت و دانلود کانفیگ گیم</button></div>
-      <div class="note">این کانفیگ با MTU 1320 و Keepalive مناسب برای عبور از محدودیت‌های اپراتور و لود سریع بازی ساخته می‌شود.</div>
+      <label>نام کانفیگ (فقط انگلیسی و عدد)</label>
+      <input type="text" id="cfgName" value="pubg-game-1"/>
+      <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت و دانلود</button></div>
+      <div class="note">نام فایل به صورت خودکار انگلیسی تنظیم می‌شود تا خطای وایرگارد برطرف شود.</div>
     </div>
   </div>
 
   <div id="tab-configs" class="tab">
     <div class="card">
-      <h2>📂 کانفیگ‌های گیمینگ ساخته‌شده</h2>
+      <h2>📂 کانفیگ‌ها</h2>
       <div id="cfgList"></div>
-    </div>
-  </div>
-
-  <div id="tab-sub" class="tab">
-    <div class="card">
-      <h2>🔗 دریافت لینک ساب</h2>
-      <label>لینک ساب صفحه</label>
-      <input type="text" id="subHttps" readonly placeholder="هنوز ساخته نشده" style="direction:ltr;text-align:left;color:#86efac;font-family:monospace;font-size:0.85rem"/>
-      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
-        <button type="button" class="btn btn-p" id="btnSubLatest">🚀 لینک آخرین کانفیگ</button>
-        <button type="button" class="btn btn-o" id="btnCopySub">📋 کپی لینک</button>
-      </div>
-      <div id="subCfgList" style="margin-top:14px"></div>
     </div>
   </div>
 </div>
@@ -105,17 +89,16 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
 <script>
 (function(){
-  var PANEL = {totalGB:8000, countryName:"سرور گیمینگ", flag: "⚡"};
+  var PANEL = {totalGB:8000};
   var SERVER_PUBLIC_KEY = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
   var SOURCE_PRIVATE_KEY = "YFXWfXouBavdqCdR4d1UHL+UK9Xj1yOy5kmTQDGxSGU=";
   var SOURCE_ADDRESS = "172.16.0.2/32";
-  var SOURCE_DNS = "1.1.1.1, 8.8.8.8";
-  var SOURCE_MTU = 1320;
+  var GAME_DNS = "1.1.1.1, 8.8.8.8";
+  var GAME_MTU = 1280;
   var ENDPOINT = "8.6.112.165:928";
-  var STORAGE_KEY = "wg_game_panel_v2_2026";
+  var STORAGE_KEY = "wg_fixed_game_2026";
   var CONFIGS = [];
   var CONSUMED = 0;
-  var LAST_SUB_URL = "";
 
   function toast(msg) {
     var t = document.getElementById("toast");
@@ -131,9 +114,8 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
     var el = document.getElementById("tab-" + id);
     if (el) el.classList.add("active");
-    if (id === "dash") renderDash();
+    if (id === "dash") updateStatus();
     if (id === "configs") renderList();
-    if (id === "sub") renderSub();
   }
 
   document.querySelectorAll(".nav button").forEach(function(btn){
@@ -147,36 +129,20 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
         var o = JSON.parse(raw);
         CONFIGS = o.configs || [];
         CONSUMED = Number(o.consumedGB) || 0;
-        LAST_SUB_URL = o.httpsSubUrl || "";
       } else { CONFIGS = []; CONSUMED = 0; save(); }
     } catch (e) { CONFIGS = []; CONSUMED = 0; }
   }
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ configs: CONFIGS, consumedGB: CONSUMED, httpsSubUrl: LAST_SUB_URL }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ configs: CONFIGS, consumedGB: CONSUMED }));
   }
 
-  function remainingDays(cfg) {
-    if (!cfg) return 0;
-    var endMs = new Date(cfg.createdAt).getTime() + (Number(cfg.days)||30)*86400000;
-    var left = Math.ceil((endMs - Date.now()) / 86400000);
-    return left > 0 ? left : 0;
-  }
-  function isActive(cfg) {
-    if (!cfg || cfg.inSub === false) return false;
-    return remainingDays(cfg) > 0;
-  }
-
-  function buildConf(name, days, gb) {
+  function buildConf(name) {
     return [
-      "# Gaming WireGuard Config - Optimized for PUBG",
-      "# Name: " + name,
-      "# MTU: " + SOURCE_MTU,
-      "",
       "[Interface]",
       "PrivateKey = " + SOURCE_PRIVATE_KEY,
       "Address = " + SOURCE_ADDRESS,
-      "DNS = " + SOURCE_DNS,
-      "MTU = " + SOURCE_MTU,
+      "DNS = " + GAME_DNS,
+      "MTU = " + GAME_MTU,
       "",
       "[Peer]",
       "PublicKey = " + SERVER_PUBLIC_KEY,
@@ -192,70 +158,53 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     a.download = filename;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
   }
-  
-  function copyText(text) {
-    if (navigator.clipboard && navigator.clipboard.writeText)
-      navigator.clipboard.writeText(text).then(function(){ toast("✅ کپی شد"); });
-  }
 
   function updateStatus() {
     var total = PANEL.totalGB;
     var used = Math.max(0, Number(CONSUMED)||0);
-    var rem = Math.max(0, total - used);
     document.getElementById("statusMeta").innerHTML =
       "حجم مصرفی: <strong style='color:#86efac'>" + used + "</strong> / " + total + " GB<br>" +
-      "کانفیگ‌های فعال: <strong>" + CONFIGS.filter(isActive).length + "</strong>";
+      "کانفیگ‌ها: <strong>" + CONFIGS.length + "</strong>";
     var pct = Math.min(100, Math.round((used/total)*100));
-    var fill = document.getElementById("quotaFill");
-    fill.style.width = pct + "%";
-    fill.style.background = "#22c55e";
+    document.getElementById("quotaFill").style.width = pct + "%";
   }
 
   function renderList() {
     updateStatus();
     var list = document.getElementById("cfgList");
-    if (!CONFIGS.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">هنوز کانفیگی ساخته نشده است</p>'; return; }
+    if (!CONFIGS.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">کانفیگی نیست</p>'; return; }
     var html = "";
     CONFIGS.forEach(function(cfg, i) {
-      var on = isActive(cfg);
-      html += '<div class="cfg"><strong>🎮 ' + (cfg.name || ("کانفیگ " + (i+1))) + '</strong><br>' +
-        '<span style="font-size:0.82rem;color:var(--muted)">حجم: ' + cfg.gb + 'GB | روز باقی‌مانده: ' + remainingDays(cfg) + '</span>' +
+      html += '<div class="cfg"><strong>🎮 ' + cfg.name + '</strong><br>' +
         '<div style="margin-top:8px;display:flex;gap:6px">' +
         '<button class="btn btn-p" onclick="dlCfg(' + i + ')">⬇️ دانلود</button>' +
-        '<button class="btn btn-o" onclick="copyCfg(' + i + ')">📋 کپی</button>' +
         '<button class="btn btn-d" onclick="delCfg(' + i + ')">🗑️ حذف</button></div></div>';
     });
     list.innerHTML = html;
   }
 
-  function renderDash() { updateStatus(); document.getElementById("dashList").innerHTML = '<p style="color:var(--muted)">سیستم گیمینگ آماده و پایدار است.</p>'; }
-  function renderSub() { updateStatus(); document.getElementById("subHttps").value = LAST_SUB_URL; }
-
   window.dlCfg = function(i) {
     var c = CONFIGS[i];
-    if (c) downloadText(c.confText, (c.name || "game_config") + ".conf");
-  };
-  window.copyCfg = function(i) {
-    var c = CONFIGS[i];
-    if (c) copyText(c.confText);
+    if (c) downloadText(c.confText, c.name + ".conf");
   };
   window.delCfg = function(i) {
-    if (confirm("حذف شود؟")) { CONFIGS.splice(i, 1); save(); renderList(); renderDash(); toast("حذف شد"); }
+    if (confirm("حذف شود؟")) { CONFIGS.splice(i, 1); save(); renderList(); toast("حذف شد"); }
   };
 
   document.getElementById("btnCreate").addEventListener("click", function(e){
     e.preventDefault();
-    var name = (document.getElementById("cfgName").value || "").trim() || "Pubg_Gaming_Config";
+    var rawName = (document.getElementById("cfgName").value || "").trim() || "pubg-cfg";
+    var safeName = rawName.replace(/[^a-zA-Z0-9_-]/g, "_"); // پاکسازی کاراکترهای غیرمجاز برای جلوگیری از ارور وایرگارد
     var days = parseInt(document.getElementById("cfgDays").value, 10) || 30;
     var gb = parseInt(document.getElementById("cfgGB").value, 10) || 50;
     
-    var confText = buildConf(name, days, gb);
-    CONFIGS.unshift({ name: name, days: days, gb: gb, confText: confText, createdAt: new Date().toISOString() });
+    var confText = buildConf(safeName);
+    CONFIGS.unshift({ name: safeName, confText: confText });
     CONSUMED = Number(CONSUMED) + gb;
     save();
     renderList();
-    downloadText(confText, name + ".conf");
-    toast("✅ کانفیگ گیم ساخته و دانلود شد");
+    downloadText(confText, safeName + ".conf");
+    toast("✅ کانفیگ بدون خطا ساخته شد");
     switchTab("configs");
   });
 
