@@ -1,216 +1,220 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>پنل تخصصی گیمینگ | WireGuard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پنل WireGuard | 5000GB</title>
+
 <style>
-:root{--accent:#22c55e;--accent2:#3b82f6;--card:rgba(12,18,34,0.95);--text:#e2e8f0;--muted:#94a3b8;--border:#22c55e55}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Tahoma,"Segoe UI",sans-serif;background:linear-gradient(145deg,#05080f,#0c1222);color:var(--text);min-height:100vh;line-height:1.65;padding:14px}
-.wrap{max-width:780px;margin:0 auto}
-header{text-align:center;padding:18px;background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:12px}
-header h1{font-size:1.3rem;background:linear-gradient(90deg,var(--accent),#60a5fa,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.badge{display:inline-block;margin-top:8px;padding:4px 12px;border:1px solid var(--accent);border-radius:999px;font-size:0.75rem;color:var(--accent)}
-.nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
-.nav button{padding:10px 16px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px;cursor:pointer;font-weight:700;font-size:0.88rem;font-family:inherit}
-.nav button.active,.nav button:hover{background:linear-gradient(135deg,#22c55e33,#3b82f628);border-color:var(--accent)}
-.tab{display:none}.tab.active{display:block}
-.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
-.card h2{font-size:1.05rem;color:var(--accent);margin-bottom:10px}
-label{display:block;font-size:0.82rem;color:var(--muted);margin:8px 0 4px}
-input,textarea{width:100%;padding:10px;background:#0a1020;border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem}
-textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;text-align:left}
-.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-@media(max-width:600px){.row{grid-template-columns:1fr}}
-.btn{padding:11px 14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.86rem;margin:3px;display:inline-flex;align-items:center;gap:5px}
-.btn:disabled{opacity:0.45;cursor:not-allowed}
-.btn-p{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#05080f}
-.btn-o{background:transparent;border:1px solid var(--border);color:var(--text)}
-.btn-d{background:rgba(239,68,68,0.15);border:1px solid #ef4444;color:#fca5a5}
-.btn-s{background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#86efac}
-.btn-w{background:rgba(245,158,11,0.15);border:1px solid #f59e0b;color:#fcd34d}
-.btn-g{background:linear-gradient(135deg,#f43f5e,#fb923c);color:#fff}
-.cfg{background:rgba(10,16,32,0.8);border-radius:12px;padding:12px;margin:10px 0;border:1px solid rgba(255,255,255,0.08)}
-.cfg strong{color:var(--accent)}
-.meta{font-size:0.84rem;color:var(--muted);line-height:1.8}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#0a1220;border:1px solid var(--accent);padding:12px 18px;border-radius:12px;z-index:99;opacity:0;transition:0.3s;font-weight:600;max-width:90%;text-align:center}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.quota{height:8px;border-radius:999px;background:#0f172a;overflow:hidden;margin-top:6px;border:1px solid rgba(255,255,255,0.08)}
-.quota>div{height:100%;border-radius:999px}
-.note{font-size:0.78rem;color:var(--muted);margin-top:10px;padding:10px;background:rgba(34,197,94,0.1);border-radius:8px;border-right:3px solid #22c55e}
+*{box-sizing:border-box}
+body{
+ margin:0;
+ background:#0b1020;
+ color:#fff;
+ font-family:Tahoma,Arial,sans-serif;
+}
+header{
+ padding:20px;
+ background:#11182d;
+ border-bottom:1px solid #26304b;
+}
+h1{margin:0 0 8px}
+.container{max-width:1100px;margin:auto;padding:20px}
+.nav{
+ display:flex;
+ gap:10px;
+ flex-wrap:wrap;
+ margin-bottom:20px;
+}
+button{
+ border:0;
+ padding:11px 16px;
+ border-radius:10px;
+ cursor:pointer;
+ background:#2563eb;
+ color:white;
+ font-weight:bold;
+}
+button:hover{opacity:.85}
+.card{
+ background:#11182d;
+ border:1px solid #26304b;
+ border-radius:16px;
+ padding:20px;
+ margin-bottom:18px;
+}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px;
+}
+input,select{
+ width:100%;
+ padding:12px;
+ border-radius:10px;
+ border:1px solid #33405f;
+ background:#0b1020;
+ color:#fff;
+ outline:none;
+}
+label{
+ display:block;
+ margin-bottom:7px;
+ color:#b9c2d8;
+}
+.stat{
+ font-size:28px;
+ font-weight:bold;
+ margin-top:8px;
+}
+.hidden{display:none}
+.config{
+ background:#0b1020;
+ border:1px solid #26304b;
+ border-radius:14px;
+ padding:15px;
+ margin-top:12px;
+}
+pre{
+ white-space:pre-wrap;
+ direction:ltr;
+ text-align:left;
+ background:#050811;
+ padding:15px;
+ border-radius:10px;
+ overflow:auto;
+}
+.badge{
+ display:inline-block;
+ padding:6px 10px;
+ border-radius:20px;
+ background:#163b2b;
+ color:#67e8a5;
+ font-size:12px;
+}
 </style>
 </head>
+
 <body>
-<div class="wrap">
-  <header>
-    <h1>🎮 پنل تخصصی گیمینگ | WireGuard</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">رفع خطای نام و بهینه‌شده برای بازی</p>
-    <span class="badge">مخصوص پابجی</span>
-  </header>
 
-  <div class="nav">
-    <button type="button" class="active" data-tab="dash">📊 داشبورد</button>
-    <button type="button" data-tab="create">➕ ساخت کانفیگ گیم</button>
-    <button type="button" data-tab="configs">📂 کانفیگ‌ها</button>
-  </div>
-
-  <div id="tab-dash" class="tab active">
-    <div class="card">
-      <h2>📊 وضعیت پنل</h2>
-      <div class="meta" id="statusMeta">...</div>
-      <div class="quota"><div id="quotaFill" style="width:0%"></div></div>
-    </div>
-  </div>
-
-  <div id="tab-create" class="tab">
-    <div class="card">
-      <h2>➕ ساخت کانفیگ جدید (نام انگلیسی)</h2>
-      <div class="row">
-        <div><label>روز اعتبار</label><input type="number" id="cfgDays" min="1" max="365" value="30"/></div>
-        <div><label>کاربر</label><input type="number" id="cfgUsers" min="1" max="50" value="1"/></div>
-        <div><label>حجم (گیگ)</label><input type="number" id="cfgGB" min="1" max="1000" value="50"/></div>
-      </div>
-      <label>نام کانفیگ (فقط انگلیسی و عدد)</label>
-      <input type="text" id="cfgName" value="pubg-game-1"/>
-      <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت و دانلود</button></div>
-      <div class="note">نام فایل به صورت خودکار انگلیسی تنظیم می‌شود تا خطای وایرگارد برطرف شود.</div>
-    </div>
-  </div>
-
-  <div id="tab-configs" class="tab">
-    <div class="card">
-      <h2>📂 کانفیگ‌ها</h2>
-      <div id="cfgList"></div>
-    </div>
-  </div>
+<header>
+<div class="container">
+<h1>پنل 🇦🇪 WireGuard</h1>
+<span class="badge">حجم کل پنل: 5000GB</span>
 </div>
-<div class="toast" id="toast"></div>
+</header>
+
+<div class="container">
+
+<div class="nav">
+<button onclick="showPage('dashboard')">داشبورد</button>
+<button onclick="showPage('create')">ساخت کانفیگ</button>
+<button onclick="showPage('configs')">کانفیگ‌ها</button>
+<button onclick="showPage('subscription')">لینک ساب</button>
+</div>
+
+<!-- Dashboard -->
+<section id="dashboard" class="page">
+<div class="grid">
+
+<div class="card">
+<div>حجم کل</div>
+<div class="stat">5000 GB</div>
+</div>
+
+<div class="card">
+<div>حجم مصرف شده</div>
+<div class="stat" id="used">0 GB</div>
+</div>
+
+<div class="card">
+<div>حجم باقی‌مانده</div>
+<div class="stat" id="remaining">5000 GB</div>
+</div>
+
+<div class="card">
+<div>تعداد کانفیگ‌ها</div>
+<div class="stat" id="count">0</div>
+</div>
+
+</div>
+</section>
+
+<!-- Create -->
+<section id="create" class="page hidden">
+
+<div class="card">
+<h2>ساخت کانفیگ WireGuard</h2>
+
+<div class="grid">
+
+<div>
+<label>نام کاربر</label>
+<input id="name" placeholder="مثلاً Amir">
+</div>
+
+<div>
+<label>حجم (GB)</label>
+<input id="volume" type="number" min="1" max="5000" value="50">
+</div>
+
+<div>
+<label>مدت (روز)</label>
+<input id="days" type="number" min="1" value="30">
+</div>
+
+</div>
+
+<br>
+
+<button onclick="createConfig()">ساخت + دانلود</button>
+
+</div>
+
+</section>
+
+<!-- Configs -->
+<section id="configs" class="page hidden">
+
+<div class="card">
+<h2>کانفیگ‌ها</h2>
+<div id="configList"></div>
+</div>
+
+</section>
+
+<!-- Subscription -->
+<section id="subscription" class="page hidden">
+
+<div class="card">
+<h2>لینک اشتراک</h2>
+
+<p>لینک ساب کانفیگ‌های فعال:</p>
+
+<input id="subLink" readonly>
+
+<br><br>
+
+<button onclick="generateSub()">ساخت لینک ساب</button>
+<button onclick="copySub()">کپی لینک</button>
+
+</div>
+
+</section>
+
+</div>
 
 <script>
-(function(){
-  var PANEL = {totalGB:8000};
-  var SERVER_PUBLIC_KEY = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
-  var SOURCE_PRIVATE_KEY = "YFXWfXouBavdqCdR4d1UHL+UK9Xj1yOy5kmTQDGxSGU=";
-  var SOURCE_ADDRESS = "172.16.0.2/32";
-  var GAME_DNS = "1.1.1.1, 8.8.8.8";
-  var GAME_MTU = 1280;
-  var ENDPOINT = "8.6.112.165:928";
-  var STORAGE_KEY = "wg_fixed_game_2026";
-  var CONFIGS = [];
-  var CONSUMED = 0;
 
-  function toast(msg) {
-    var t = document.getElementById("toast");
-    t.textContent = msg;
-    t.classList.add("show");
-    setTimeout(function(){ t.classList.remove("show"); }, 3000);
-  }
+const PANEL = {
+    totalGB: 5000,
+    endpoint: "YOUR_SERVER:51820",
+    serverPublicKey: "SERVER_PUBLIC_KEY",
+    dns: "1.1.1.1"
+};
 
-  function switchTab(id) {
-    document.querySelectorAll(".nav button").forEach(function(b){
-      b.classList.toggle("active", b.getAttribute("data-tab") === id);
-    });
-    document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
-    var el = document.getElementById("tab-" + id);
-    if (el) el.classList.add("active");
-    if (id === "dash") updateStatus();
-    if (id === "configs") renderList();
-  }
+let configs =
+    JSON.parse(localStorage.getItem("wg_configs") || "[]");
 
-  document.querySelectorAll(".nav button").forEach(function(btn){
-    btn.addEventListener("click", function(){ switchTab(btn.getAttribute("data-tab")); });
-  });
 
-  function load() {
-    try {
-      var raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        var o = JSON.parse(raw);
-        CONFIGS = o.configs || [];
-        CONSUMED = Number(o.consumedGB) || 0;
-      } else { CONFIGS = []; CONSUMED = 0; save(); }
-    } catch (e) { CONFIGS = []; CONSUMED = 0; }
-  }
-  function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ configs: CONFIGS, consumedGB: CONSUMED }));
-  }
-
-  function buildConf(name) {
-    return [
-      "[Interface]",
-      "PrivateKey = " + SOURCE_PRIVATE_KEY,
-      "Address = " + SOURCE_ADDRESS,
-      "DNS = " + GAME_DNS,
-      "MTU = " + GAME_MTU,
-      "",
-      "[Peer]",
-      "PublicKey = " + SERVER_PUBLIC_KEY,
-      "AllowedIPs = 0.0.0.0/0",
-      "Endpoint = " + ENDPOINT,
-      "PersistentKeepalive = 25"
-    ].join("\n");
-  }
-
-  function downloadText(text, filename) {
-    var a = document.createElement("a");
-    a.href = URL.createObjectURL(new Blob([text], { type: "application/octet-stream" }));
-    a.download = filename;
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  }
-
-  function updateStatus() {
-    var total = PANEL.totalGB;
-    var used = Math.max(0, Number(CONSUMED)||0);
-    document.getElementById("statusMeta").innerHTML =
-      "حجم مصرفی: <strong style='color:#86efac'>" + used + "</strong> / " + total + " GB<br>" +
-      "کانفیگ‌ها: <strong>" + CONFIGS.length + "</strong>";
-    var pct = Math.min(100, Math.round((used/total)*100));
-    document.getElementById("quotaFill").style.width = pct + "%";
-  }
-
-  function renderList() {
-    updateStatus();
-    var list = document.getElementById("cfgList");
-    if (!CONFIGS.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">کانفیگی نیست</p>'; return; }
-    var html = "";
-    CONFIGS.forEach(function(cfg, i) {
-      html += '<div class="cfg"><strong>🎮 ' + cfg.name + '</strong><br>' +
-        '<div style="margin-top:8px;display:flex;gap:6px">' +
-        '<button class="btn btn-p" onclick="dlCfg(' + i + ')">⬇️ دانلود</button>' +
-        '<button class="btn btn-d" onclick="delCfg(' + i + ')">🗑️ حذف</button></div></div>';
-    });
-    list.innerHTML = html;
-  }
-
-  window.dlCfg = function(i) {
-    var c = CONFIGS[i];
-    if (c) downloadText(c.confText, c.name + ".conf");
-  };
-  window.delCfg = function(i) {
-    if (confirm("حذف شود؟")) { CONFIGS.splice(i, 1); save(); renderList(); toast("حذف شد"); }
-  };
-
-  document.getElementById("btnCreate").addEventListener("click", function(e){
-    e.preventDefault();
-    var rawName = (document.getElementById("cfgName").value || "").trim() || "pubg-cfg";
-    var safeName = rawName.replace(/[^a-zA-Z0-9_-]/g, "_"); // پاکسازی کاراکترهای غیرمجاز برای جلوگیری از ارور وایرگارد
-    var days = parseInt(document.getElementById("cfgDays").value, 10) || 30;
-    var gb = parseInt(document.getElementById("cfgGB").value, 10) || 50;
-    
-    var confText = buildConf(safeName);
-    CONFIGS.unshift({ name: safeName, confText: confText });
-    CONSUMED = Number(CONSUMED) + gb;
-    save();
-    renderList();
-    downloadText(confText, safeName + ".conf");
-    toast("✅ کانفیگ بدون خطا ساخته شد");
-    switchTab("configs");
-  });
-
-  load();
-  renderList();
-})();
-</script>
-</body>
-</html>
+function save(){
