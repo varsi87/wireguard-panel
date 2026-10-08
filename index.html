@@ -1,220 +1,549 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>پنل WireGuard | 5000GB</title>
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>پنل 🇦🇪 امارات | WireGuard4582</title>
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;
- background:#0b1020;
- color:#fff;
- font-family:Tahoma,Arial,sans-serif;
-}
-header{
- padding:20px;
- background:#11182d;
- border-bottom:1px solid #26304b;
-}
-h1{margin:0 0 8px}
-.container{max-width:1100px;margin:auto;padding:20px}
-.nav{
- display:flex;
- gap:10px;
- flex-wrap:wrap;
- margin-bottom:20px;
-}
-button{
- border:0;
- padding:11px 16px;
- border-radius:10px;
- cursor:pointer;
- background:#2563eb;
- color:white;
- font-weight:bold;
-}
-button:hover{opacity:.85}
-.card{
- background:#11182d;
- border:1px solid #26304b;
- border-radius:16px;
- padding:20px;
- margin-bottom:18px;
-}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:15px;
-}
-input,select{
- width:100%;
- padding:12px;
- border-radius:10px;
- border:1px solid #33405f;
- background:#0b1020;
- color:#fff;
- outline:none;
-}
-label{
- display:block;
- margin-bottom:7px;
- color:#b9c2d8;
-}
-.stat{
- font-size:28px;
- font-weight:bold;
- margin-top:8px;
-}
-.hidden{display:none}
-.config{
- background:#0b1020;
- border:1px solid #26304b;
- border-radius:14px;
- padding:15px;
- margin-top:12px;
-}
-pre{
- white-space:pre-wrap;
- direction:ltr;
- text-align:left;
- background:#050811;
- padding:15px;
- border-radius:10px;
- overflow:auto;
-}
-.badge{
- display:inline-block;
- padding:6px 10px;
- border-radius:20px;
- background:#163b2b;
- color:#67e8a5;
- font-size:12px;
-}
+:root{--accent:#eab308;--accent2:#8b5cf6;--card:rgba(12,18,34,0.95);--text:#e2e8f0;--muted:#94a3b8;--border:#eab30855}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Tahoma,"Segoe UI",sans-serif;background:linear-gradient(145deg,#05080f,#0c1222);color:var(--text);min-height:100vh;line-height:1.65;padding:14px}
+.wrap{max-width:780px;margin:0 auto}
+header{text-align:center;padding:18px;background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:12px}
+header h1{font-size:1.3rem;background:linear-gradient(90deg,var(--accent),#60a5fa,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.badge{display:inline-block;margin-top:8px;padding:4px 12px;border:1px solid var(--accent);border-radius:999px;font-size:0.75rem;color:var(--accent)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.nav button{padding:10px 16px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px;cursor:pointer;font-weight:700;font-size:0.88rem;font-family:inherit}
+.nav button.active,.nav button:hover{background:linear-gradient(135deg,#eab30833,#8b5cf628);border-color:var(--accent)}
+.tab{display:none}.tab.active{display:block}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
+.card h2{font-size:1.05rem;color:var(--accent);margin-bottom:10px}
+label{display:block;font-size:0.82rem;color:var(--muted);margin:8px 0 4px}
+input,textarea{width:100%;padding:10px;background:#0a1020;border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:0.95rem}
+textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;text-align:left}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+@media(max-width:600px){.row{grid-template-columns:1fr}}
+.btn{padding:11px 14px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-family:inherit;font-size:0.86rem;margin:3px;display:inline-flex;align-items:center;gap:5px}
+.btn:disabled{opacity:0.45;cursor:not-allowed}
+.btn-p{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#05080f}
+.btn-o{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn-d{background:rgba(239,68,68,0.15);border:1px solid #ef4444;color:#fca5a5}
+.btn-s{background:rgba(34,197,94,0.15);border:1px solid #22c55e;color:#86efac}
+.btn-w{background:rgba(245,158,11,0.15);border:1px solid #f59e0b;color:#fcd34d}
+.btn-g{background:linear-gradient(135deg,#f43f5e,#fb923c);color:#fff}
+.cfg{background:rgba(10,16,32,0.8);border-radius:12px;padding:12px;margin:10px 0;border:1px solid rgba(255,255,255,0.08)}
+.cfg strong{color:var(--accent)}
+.meta{font-size:0.84rem;color:var(--muted);line-height:1.8}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#0a1220;border:1px solid var(--accent);padding:12px 18px;border-radius:12px;z-index:99;opacity:0;transition:0.3s;font-weight:600;max-width:90%;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.quota{height:8px;border-radius:999px;background:#0f172a;overflow:hidden;margin-top:6px;border:1px solid rgba(255,255,255,0.08)}
+.quota>div{height:100%;border-radius:999px}
+.owner{color:#a78bfa;font-size:0.85rem;font-weight:700}
+.note{font-size:0.78rem;color:var(--muted);margin-top:10px;padding:10px;background:rgba(245,158,11,0.1);border-radius:8px;border-right:3px solid #f59e0b}
 </style>
 </head>
-
 <body>
+<div class="wrap">
+  <header>
+    <h1>🛡️ پنل 🇦🇪 امارات</h1>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل متصل به کانفیگ اصلی | WireGuard | حجم پنل بر اساس سهم کانفیگ</p>
+    <span class="badge">مالک WireGuard4582</span>
+  </header>
 
-<header>
-<div class="container">
-<h1>پنل 🇦🇪 WireGuard</h1>
-<span class="badge">حجم کل پنل: 5000GB</span>
+  <div class="nav">
+    <button type="button" class="active" data-tab="dash">📊 داشبورد</button>
+    <button type="button" data-tab="create">➕ ساخت کانفیگ</button>
+    <button type="button" data-tab="configs">📂 کانفیگ‌ها</button>
+    <button type="button" data-tab="sub">🔗 لینک ساب</button>
+  </div>
+
+  <div id="tab-dash" class="tab active">
+    <div class="card">
+      <h2>📊 داشبورد این پنل</h2>
+      <div class="meta" id="statusMeta">...</div>
+      <div class="quota"><div id="quotaFill" style="width:0%"></div></div>
+      <div id="dashList" style="margin-top:12px"></div>
+    </div>
+  </div>
+
+  <div id="tab-create" class="tab">
+    <div class="card">
+      <h2>➕ ساخت کانفیگ پابجی</h2>
+      <div class="row">
+        <div><label>روز اعتبار</label><input type="number" id="cfgDays" min="1" max="365" value="30"/></div>
+        <div><label>کاربر</label><input type="number" id="cfgUsers" min="1" max="50" value="1"/></div>
+        <div><label>حجم (گیگ)</label><input type="number" id="cfgGB" min="1" max="1000" value="50"/></div>
+      </div>
+      <label>نام (اختیاری)</label>
+      <input type="text" id="cfgName" placeholder="پابجی ویژه"/>
+      <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت + دانلود</button></div>
+    </div>
+  </div>
+
+  <div id="tab-configs" class="tab">
+    <div class="card">
+      <h2>📂 کانفیگ‌های ساخته‌شده</h2>
+      <div id="cfgList"></div>
+    </div>
+  </div>
+
+  <div id="tab-sub" class="tab">
+    <div class="card">
+      <h2>🔗 دریافت لینک ساب</h2>
+      <p class="meta">از این بخش برای هر کانفیگ یا همه کانفیگ‌های فعال، لینک ساب بگیرید.</p>
+      <label>لینک ساب https (آخرین ساخته‌شده)</label>
+      <input type="text" id="subHttps" readonly placeholder="هنوز ساخته نشده" style="direction:ltr;text-align:left;color:#86efac;font-family:monospace;font-size:0.85rem"/>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
+        <button type="button" class="btn btn-p" id="btnSubLatest">🚀 لینک آخرین کانفیگ</button>
+        <button type="button" class="btn btn-g" id="btnSubAll">📦 لینک همه فعال‌ها</button>
+        <button type="button" class="btn btn-o" id="btnCopySub">📋 کپی لینک</button>
+        <button type="button" class="btn btn-o" id="btnOpenSub">🌐 باز کردن صفحه ساب</button>
+        <button type="button" class="btn btn-o" id="btnCopyB64">📋 کپی Base64</button>
+      </div>
+      <div class="note">بعد از هر تغییر وضعیت یا مصرف، دوباره لینک بسازید تا صفحه ساب به‌روز باشد. مالک WireGuard4582</div>
+      <div id="subCfgList" style="margin-top:14px"></div>
+    </div>
+  </div>
 </div>
-</header>
-
-<div class="container">
-
-<div class="nav">
-<button onclick="showPage('dashboard')">داشبورد</button>
-<button onclick="showPage('create')">ساخت کانفیگ</button>
-<button onclick="showPage('configs')">کانفیگ‌ها</button>
-<button onclick="showPage('subscription')">لینک ساب</button>
-</div>
-
-<!-- Dashboard -->
-<section id="dashboard" class="page">
-<div class="grid">
-
-<div class="card">
-<div>حجم کل</div>
-<div class="stat">5000 GB</div>
-</div>
-
-<div class="card">
-<div>حجم مصرف شده</div>
-<div class="stat" id="used">0 GB</div>
-</div>
-
-<div class="card">
-<div>حجم باقی‌مانده</div>
-<div class="stat" id="remaining">5000 GB</div>
-</div>
-
-<div class="card">
-<div>تعداد کانفیگ‌ها</div>
-<div class="stat" id="count">0</div>
-</div>
-
-</div>
-</section>
-
-<!-- Create -->
-<section id="create" class="page hidden">
-
-<div class="card">
-<h2>ساخت کانفیگ WireGuard</h2>
-
-<div class="grid">
-
-<div>
-<label>نام کاربر</label>
-<input id="name" placeholder="مثلاً Amir">
-</div>
-
-<div>
-<label>حجم (GB)</label>
-<input id="volume" type="number" min="1" max="5000" value="50">
-</div>
-
-<div>
-<label>مدت (روز)</label>
-<input id="days" type="number" min="1" value="30">
-</div>
-
-</div>
-
-<br>
-
-<button onclick="createConfig()">ساخت + دانلود</button>
-
-</div>
-
-</section>
-
-<!-- Configs -->
-<section id="configs" class="page hidden">
-
-<div class="card">
-<h2>کانفیگ‌ها</h2>
-<div id="configList"></div>
-</div>
-
-</section>
-
-<!-- Subscription -->
-<section id="subscription" class="page hidden">
-
-<div class="card">
-<h2>لینک اشتراک</h2>
-
-<p>لینک ساب کانفیگ‌های فعال:</p>
-
-<input id="subLink" readonly>
-
-<br><br>
-
-<button onclick="generateSub()">ساخت لینک ساب</button>
-<button onclick="copySub()">کپی لینک</button>
-
-</div>
-
-</section>
-
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
+(function(){
+  var PANEL = {"id":"pnl_real_2dilxckufx","countryCode":"server","countryName":"سرور اصلی","flag":"🟢","city":"","ipType":"ipv4","dnsMode":"fixed","dnsCount":2,"totalGB":8000,"endpoint":"8.6.112.165:928"};
+  // Server/client values taken directly from the supplied 2dilxckufx.conf.
+  var SERVER_PUBLIC_KEY = "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=";
+  var SOURCE_PRIVATE_KEY = "YFXWfXouBavdqCdR4d1UHL+UK9Xj1yOy5kmTQDGxSGU=";
+  var SOURCE_ADDRESS = "172.16.0.2/32";
+  var SOURCE_DNS = "1.1.1.1, 8.8.8.8";
+  var SOURCE_MTU = 1320;
+  var ENDPOINTS = ["8.6.112.165:928"];
+  var DNS_BASES = ["94.200.","5.195.","2.50.","86.96.","217.164.","185.56.","91.72.","37.131.","176.205.","94.56.","5.30.","213.42.","91.74.","94.201.","2.49.","5.192.","86.98.","185.60.","91.75.","37.130.","176.204.","94.57.","5.31.","213.43.","94.203.","2.51.","5.196.","86.97.","217.165.","185.57.","91.73.","37.132.","176.206.","94.55.","5.29.","213.41.","91.76.","94.202.","2.48.","5.193.","86.99.","185.58.","91.71.","37.133.","176.207.","94.54.","5.28.","213.40."];
+  var STORAGE_KEY = "wg_wireguard4582_exp_pnl_muva9s9o_vm19zt";
+  var CONFIGS = [];
+  var CONSUMED = 0;
+  var LAST_SUB_URL = "";
 
-const PANEL = {
-    totalGB: 5000,
-    endpoint: "YOUR_SERVER:51820",
-    serverPublicKey: "SERVER_PUBLIC_KEY",
-    dns: "1.1.1.1"
-};
+  function toast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    setTimeout(function(){ t.classList.remove("show"); }, 3000);
+  }
 
-let configs =
-    JSON.parse(localStorage.getItem("wg_configs") || "[]");
+  function switchTab(id) {
+    document.querySelectorAll(".nav button").forEach(function(b){
+      b.classList.toggle("active", b.getAttribute("data-tab") === id);
+    });
+    document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+    var el = document.getElementById("tab-" + id);
+    if (el) el.classList.add("active");
+    if (id === "dash") renderDash();
+    if (id === "configs") renderList();
+    if (id === "sub") renderSub();
+  }
 
+  document.querySelectorAll(".nav button").forEach(function(btn){
+    btn.addEventListener("click", function(){ switchTab(btn.getAttribute("data-tab")); });
+  });
 
-function save(){
+  function load() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var o = JSON.parse(raw);
+        CONFIGS = o.configs || [];
+        CONSUMED = Number(o.consumedGB) || 0;
+        LAST_SUB_URL = o.httpsSubUrl || "";
+      } else {
+        CONFIGS = [];
+        CONSUMED = CONFIGS.reduce(function(s,c){ return s + (Number(c.gb)||0); }, 0);
+        save();
+      }
+    } catch (e) { CONFIGS = []; CONSUMED = 0; }
+    CONFIGS.forEach(function(c){
+      if (typeof c.inSub === "undefined") c.inSub = true;
+      if (typeof c.usedGB === "undefined") c.usedGB = 0;
+    });
+  }
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ configs: CONFIGS, consumedGB: CONSUMED, httpsSubUrl: LAST_SUB_URL }));
+  }
+
+  function remainingDays(cfg) {
+    if (!cfg) return 0;
+    var endMs = null;
+    if (cfg.expiresAt) endMs = new Date(cfg.expiresAt).getTime();
+    else if (cfg.createdAt && cfg.days) endMs = new Date(cfg.createdAt).getTime() + (Number(cfg.days)||0)*86400000;
+    else return Number(cfg.days)||0;
+    var left = Math.ceil((endMs - Date.now()) / 86400000);
+    return left > 0 ? left : 0;
+  }
+  function isActive(cfg) {
+    if (!cfg || cfg.inSub === false) return false;
+    if (remainingDays(cfg) <= 0) return false;
+    return Math.max(0, (Number(cfg.gb)||0) - (Number(cfg.usedGB)||0)) > 0;
+  }
+
+  function toB64(buf) {
+    var b = new Uint8Array(buf), s = "";
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return btoa(s);
+  }
+  function genKeys() {
+    var p = new Uint8Array(32), u = new Uint8Array(32);
+    crypto.getRandomValues(p); crypto.getRandomValues(u);
+    p[0] &= 248; p[31] &= 127; p[31] |= 64;
+    return { privateKey: toB64(p), publicKey: toB64(u) };
+  }
+  function pickEndpoint() {
+    var list = (ENDPOINTS || []).filter(function(ep){ return /^\d{1,3}(\.\d{1,3}){3}:\d+$/.test(String(ep)); });
+    if (!list.length) list = ["185.220.101.42:51820","95.216.18.44:51820"];
+    var used = CONFIGS.map(function(c){ return c.endpoint; }).filter(Boolean);
+    var pool = list.filter(function(ep){ return used.indexOf(ep) < 0; });
+    if (!pool.length) pool = list;
+    var ep = pool[Math.floor(Math.random()*pool.length)];
+    var ports = [51820,51821,51822,51823,51824,51825];
+    return ep.split(":")[0] + ":" + ports[Math.floor(Math.random()*ports.length)];
+  }
+  function pickDns() {
+    var out = ["8.8.8.8","78.157.42.100","8.8.4.4","1.1.1.1"];
+    var bases = DNS_BASES && DNS_BASES.length ? DNS_BASES : ["1.1.","8.8.","9.9."];
+    var count = Math.max(8, Math.min(72, Number(PANEL.dnsCount)||72));
+    var seen = {}; out.forEach(function(ip){ seen[ip]=true; });
+    var g = 0;
+    while (out.length < count && g++ < 300) {
+      var b = bases[Math.floor(Math.random()*bases.length)];
+      var parts = String(b).replace(/[^0-9.]/g,"").split(".").filter(Boolean);
+      var ip = parts.length>=2 ? (parts[0]+"."+parts[1]+"."+(1+Math.floor(Math.random()*254))+"."+(1+Math.floor(Math.random()*254))) : "8.8.8.8";
+      if (!seen[ip]) { seen[ip]=true; out.push(ip); }
+    }
+    return out.join(", ");
+  }
+  function buildConf(name, days, users, gb) {
+    // This panel uses the exact supplied client identity and the exact peer/server
+    // values. It intentionally does not invent endpoints, DNS values or server keys.
+    var ep = "8.6.112.165:928", dns = SOURCE_DNS;
+    var safe = String(name).replace(/[^\x20-\x7E]/g,"_").slice(0,40);
+    var conf = [
+      "# Gaming WireGuard | Connected source: 2dilxckufx.conf",
+      "# Name: "+safe,
+      "# Volume: "+gb+"GB",
+      "# Time: "+days+" days",
+      "# Server: "+ep,
+      "",
+      "[Interface]",
+      "PrivateKey = "+SOURCE_PRIVATE_KEY,
+      "Address = "+SOURCE_ADDRESS,
+      "DNS = "+dns,
+      "MTU = "+SOURCE_MTU,
+      "",
+      "[Peer]",
+      "PublicKey = "+SERVER_PUBLIC_KEY,
+      "AllowedIPs = 0.0.0.0/0",
+      "Endpoint = "+ep,
+      ""
+    ].join("\n");
+    return { conf: conf, endpoint: ep, dns: dns, privateKey: SOURCE_PRIVATE_KEY };
+  }
+
+  function downloadText(text, filename) {
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([text], { type: "application/octet-stream" }));
+    a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText)
+      navigator.clipboard.writeText(text).then(function(){ toast("✅ کپی شد"); }).catch(function(){ fallback(text); });
+    else fallback(text);
+  }
+  function fallback(text) {
+    var ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast("✅ کپی شد"); } catch(e) { toast("❌ کپی نشد"); }
+    document.body.removeChild(ta);
+  }
+
+  function updateStatus() {
+    var total = Number(PANEL.totalGB)||100;
+    var used = Math.max(0, Number(CONSUMED)||0);
+    var rem = Math.max(0, total - used);
+    var act = CONFIGS.filter(isActive).length;
+    document.getElementById("statusMeta").innerHTML =
+      "کشور: "+PANEL.flag+" "+PANEL.countryName+(PANEL.city?" ("+PANEL.city+")":"")+"<br>"+
+      "حجم: <strong style='color:#86efac'>"+used+"</strong> / "+total+" GB — باقی: <strong>"+rem+"</strong> GB<br>"+
+      "کانفیگ فعال: <strong>"+act+"</strong> / "+CONFIGS.length+"<br><span class='owner'>مالک WireGuard4582</span>";
+    var pct = Math.min(100, Math.round((used/total)*100));
+    var fill = document.getElementById("quotaFill");
+    fill.style.width = pct+"%";
+    fill.style.background = pct>=95?"#ef4444":pct>=70?"#f59e0b":"#eab308";
+    var btn = document.getElementById("btnCreate");
+    if (btn) btn.disabled = rem <= 0;
+  }
+
+  function cfgButtons(cfg, i, on) {
+    return '<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px">'+
+      '<button type="button" class="btn '+(cfg.inSub!==false?"btn-d":"btn-s")+'" data-a="toggle" data-i="'+i+'">'+(cfg.inSub!==false?"🔴 غیرفعال":"🟢 فعال")+'</button>'+
+      '<button type="button" class="btn btn-p" data-a="dl" data-i="'+i+'"'+(on?"":" disabled")+'>⬇️ دانلود</button>'+
+      '<button type="button" class="btn btn-o" data-a="copy" data-i="'+i+'"'+(on?"":" disabled")+'>📋 کپی</button>'+
+      '<button type="button" class="btn btn-o" data-a="qr" data-i="'+i+'"'+(on?"":" disabled")+'>📱 QR</button>'+
+      '<button type="button" class="btn btn-g" data-a="sub" data-i="'+i+'">🔗 لینک ساب</button>'+
+      '<button type="button" class="btn btn-w" data-a="reset" data-i="'+i+'">🔄 آپدیت</button>'+
+      '<button type="button" class="btn btn-d" data-a="del" data-i="'+i+'">🗑️</button></div>';
+  }
+
+  function renderList() {
+    updateStatus();
+    var list = document.getElementById("cfgList");
+    if (!CONFIGS.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">هنوز کانفیگی نیست</p>'; return; }
+    var html = "";
+    CONFIGS.forEach(function(cfg, i) {
+      var on = isActive(cfg);
+      var left = remainingDays(cfg);
+      var st = on ? "فعال" : (cfg.inSub===false?"غیرفعال":(left<=0?"منقضی":"حجم تمام"));
+      html += '<div class="cfg" style="opacity:'+(on?1:0.55)+'"><strong>🎮 '+(cfg.name||("#"+(i+1)))+'</strong> <span style="font-size:0.75rem;color:'+(on?"#86efac":"#fca5a5")+'">● '+st+'</span><br>'+
+        '<span style="font-size:0.82rem;color:var(--muted)">'+(cfg.days||0)+' روز • باقی: '+left+' • '+(cfg.gb||0)+' گیگ</span>'+cfgButtons(cfg,i,on)+'</div>';
+    });
+    list.innerHTML = html;
+  }
+
+  function renderDash() {
+    updateStatus();
+    var box = document.getElementById("dashList");
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">کانفیگی نیست — از تب ساخت کانفیگ شروع کنید</p>'; return; }
+    var html = "";
+    CONFIGS.forEach(function(cfg, i) {
+      var on = isActive(cfg);
+      html += '<div class="cfg"><strong>'+(cfg.name||("#"+(i+1)))+'</strong> — '+(on?"فعال":"غیرفعال")+' | '+(cfg.gb||0)+'GB | باقی روز: '+remainingDays(cfg)+
+        '<br><button type="button" class="btn btn-g" data-a="sub" data-i="'+i+'" style="margin-top:6px">🔗 دریافت لینک ساب</button></div>';
+    });
+    box.innerHTML = html;
+  }
+
+  function renderSub() {
+    updateStatus();
+    var el = document.getElementById("subHttps");
+    if (el) { el.value = LAST_SUB_URL || ""; el.placeholder = LAST_SUB_URL ? "" : "هنوز ساخته نشده — دکمه ساخت لینک را بزنید"; }
+    var box = document.getElementById("subCfgList");
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">ابتدا کانفیگ بسازید</p>'; return; }
+    var html = '<strong style="color:var(--accent);font-size:0.9rem">لینک ساب برای هر کانفیگ:</strong>';
+    CONFIGS.forEach(function(cfg, i) {
+      var on = isActive(cfg);
+      html += '<div class="cfg"><div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:center">'+
+        '<span>'+(cfg.name||("#"+(i+1)))+' — <span style="color:'+(on?"#86efac":"#fca5a5")+'">'+(on?"فعال":"غیرفعال")+'</span></span>'+
+        '<button type="button" class="btn btn-g" data-a="sub" data-i="'+i+'">🔗 دریافت لینک ساب</button></div>'+
+        (cfg.httpsSubUrl ? '<div style="margin-top:6px;font-size:0.72rem;direction:ltr;text-align:left;color:#86efac;word-break:break-all;font-family:monospace">'+cfg.httpsSubUrl+'</div>' : '')+
+        '</div>';
+    });
+    box.innerHTML = html;
+  }
+
+  function buildSubPageHtml(cfg) {
+    var on = isActive(cfg);
+    var nameStr = String(cfg.name || "گیمینگ");
+    var totalGB = Number(cfg.gb)||0;
+    var used = Math.max(0, Number(cfg.usedGB)||0);
+    var rem = Math.max(0, totalGB - used);
+    var confData = on ? (cfg.confText || "") : "";
+    var statusTxt = on ? "فعال" : "غیرفعال";
+    var subId = String(cfg.id || Math.random().toString(16).slice(2)).replace(/[^a-zA-Z0-9]/g,"").slice(0,16);
+    var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" + encodeURIComponent(confData ? confData.slice(0,1200) : "INACTIVE");
+    function fmt(gb){ var n=Math.max(0,Number(gb)||0); if(n>=1)return n.toFixed(2)+" GB"; var mb=Math.round(n*1024*100)/100; return mb>=0.01?mb+" MB":"0 B"; }
+    return '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>'+
+      '<title>ساب | '+nameStr.replace(/</g,"")+'</title><style>'+
+      '*{box-sizing:border-box;margin:0;padding:0}body{font-family:Tahoma,Arial,sans-serif;background:linear-gradient(165deg,#1a0f2e,#2a1548);color:#e8e0f0;padding:14px;min-height:100%}'+
+      '.page{max-width:420px;margin:0 auto}.card{background:rgba(40,25,70,.95);border:1px solid rgba(168,85,247,.3);border-radius:16px;overflow:hidden;margin-bottom:12px}'+
+      '.row{display:flex;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.06)}.lbl{color:#a78bfa;font-size:13px}.val{color:#f3e8ff;font-weight:700;direction:ltr;text-align:left;max-width:58%;word-break:break-all}'+
+      '.pill{padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}.ok{background:rgba(34,197,94,.2);color:#86efac;border:1px solid #22c55e}.off{background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid #ef4444}'+
+      '.btn{display:block;width:100%;padding:14px;border:none;border-radius:28px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:800;cursor:pointer;margin:12px 0;font-family:inherit}'+
+      '.btn:disabled{background:#4b5563;cursor:not-allowed}.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(15,8,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#d8b4fe;white-space:pre-wrap;word-break:break-all}'+
+      '.owner{text-align:center;color:#c084fc;font-weight:700;margin:8px 0}</style></head><body><div class="page">'+
+      '<h2 style="text-align:center;color:#c084fc">📋 اطلاعات کانفیگ</h2><p class="owner">مالک WireGuard4582</p>'+
+      '<div class="card">'+
+      '<div class="row"><span class="lbl">نام</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
+      '<div class="row"><span class="lbl">شناسه</span><span class="val">'+subId+'</span></div>'+
+      '<div class="row"><span class="lbl">حجم</span><span class="val">'+totalGB+' GB</span></div>'+
+      '<div class="row"><span class="lbl">حجم</span><span class="val">'+totalGB+' GB</span></div>'+
+      '<div class="row"><span class="lbl">لوکیشن</span><span class="val">'+PANEL.flag+' '+PANEL.countryName+'</span></div>'+
+      '<div class="row"><span class="lbl">وضعیت</span><span class="val"><span class="pill '+(on?"ok":"off")+'">'+statusTxt+'</span></span></div></div>'+
+      '<div class="conf">'+(confData||"⛔ کانفیگ غیرفعال").replace(/</g,"&lt;")+'</div>'+
+      (on?'<button class="btn" onclick="var c='+JSON.stringify(confData)+';var a=document.createElement(\'a\');a.href=URL.createObjectURL(new Blob([c]));a.download=\'config.conf\';a.click()">⬇️ دانلود</button>':'<button class="btn" disabled>⛔ دانلود غیرفعال</button>')+
+      '<div class="qr">'+(on?'<img src="'+qrUrl+'" width="220" height="220"/>':'<div style="padding:80px;color:#a78bfa">⛔ غیرفعال</div>')+'</div>'+
+      '<p class="owner">'+PANEL.flag+' '+PANEL.countryName+' • مالک WireGuard4582</p></div></body></html>';
+  }
+
+  function buildAllSubPageHtml() {
+    var list = CONFIGS.filter(isActive);
+    if (!list.length) return null;
+    var cards = list.map(function(cfg, idx) {
+      return '<div style="background:#fff;border-radius:14px;padding:14px;margin-bottom:14px;color:#111">'+
+        '<h3>'+(cfg.name||("#"+(idx+1)))+'</h3><p style="color:#16a34a;font-weight:700">● فعال</p>'+
+        '<p>حجم: '+(cfg.gb||0)+' GB | روز: '+(cfg.days||0)+'</p>'+
+        '<p style="color:#0d9488;font-weight:700">مالک WireGuard4582</p>'+
+        '<pre style="font-size:11px;overflow:auto;max-height:180px;background:#f5f5f5;padding:8px;direction:ltr;text-align:left">'+(cfg.confText||"").replace(/</g,"&lt;")+'</pre></div>';
+    }).join("");
+    return '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"/><title>ساب | '+PANEL.countryName+'</title></head>'+
+      '<body style="font-family:Tahoma;background:#f0f2f5;padding:16px;max-width:480px;margin:0 auto">'+
+      '<h2>'+PANEL.flag+' '+PANEL.countryName+' — ساب همه فعال‌ها</h2><p style="color:#0d9488;font-weight:700">مالک WireGuard4582</p>'+cards+'</body></html>';
+  }
+
+  async function uploadHtml(bodyHtml) {
+    var url = null;
+    try {
+      var res = await fetch("https://api.pastes.dev/post", { method:"POST", headers:{"Content-Type":"text/html; charset=utf-8"}, body: bodyHtml });
+      if (res.ok) { var data = await res.json(); if (data && data.key) url = "https://api.pastes.dev/"+data.key; }
+    } catch(e) {}
+    if (!url) {
+      try {
+        var fd = new FormData();
+        fd.append("file", new Blob([bodyHtml],{type:"text/html;charset=utf-8"}), "sub.html");
+        var res2 = await fetch("https://0x0.st", { method:"POST", body: fd });
+        if (res2.ok) { var t = (await res2.text()).trim(); if (t.indexOf("http")===0) url = t; }
+      } catch(e) {}
+    }
+    return url;
+  }
+
+  async function createSubFor(i) {
+    var cfg = CONFIGS[i];
+    if (!cfg) return;
+    toast("⏳ ساخت لینک ساب...");
+    var body = buildSubPageHtml(cfg);
+    var url = await uploadHtml(body);
+    if (url) {
+      cfg.httpsSubUrl = url;
+      LAST_SUB_URL = url;
+      save();
+      var el = document.getElementById("subHttps");
+      if (el) el.value = url;
+      copyText(url);
+      toast("✅ لینک ساب ساخته و کپی شد");
+      renderSub(); renderDash(); renderList();
+    } else {
+      window.open(URL.createObjectURL(new Blob([body],{type:"text/html;charset=utf-8"})), "_blank");
+      toast("⚠ هاست در دسترس نبود — صفحه محلی باز شد");
+    }
+  }
+
+  async function createSubAll() {
+    var body = buildAllSubPageHtml();
+    if (!body) { toast("⚠ کانفیگ فعالی نیست"); return; }
+    toast("⏳ ساخت لینک همه فعال‌ها...");
+    var url = await uploadHtml(body);
+    if (url) {
+      LAST_SUB_URL = url;
+      save();
+      var el = document.getElementById("subHttps");
+      if (el) el.value = url;
+      copyText(url);
+      toast("✅ لینک همه فعال‌ها ساخته شد");
+    } else {
+      window.open(URL.createObjectURL(new Blob([body],{type:"text/html;charset=utf-8"})), "_blank");
+      toast("⚠ صفحه محلی باز شد");
+    }
+  }
+
+  function createConfig() {
+    var total = Number(PANEL.totalGB)||100;
+    var rem = Math.max(0, total - (Number(CONSUMED)||0));
+    if (rem <= 0) { toast("⛔ حجم پنل تمام شده"); return; }
+    var days = parseInt(document.getElementById("cfgDays").value,10)||30;
+    var users = parseInt(document.getElementById("cfgUsers").value,10)||1;
+    var gb = parseInt(document.getElementById("cfgGB").value,10)||50;
+    if (gb > rem) { gb = rem; toast("حجم محدود به "+rem+" GB"); }
+    var name = (document.getElementById("cfgName").value||"").trim();
+    if (!name) name = "پابجی-"+(PANEL.countryCode||"").toUpperCase()+"-"+days+"روزه-"+gb+"گیگ";
+    var built = buildConf(name, days, users, gb);
+    CONFIGS.unshift({
+      id: "cfg_"+Date.now().toString(36), name:name, days:days, users:users, gb:gb, usedGB:0,
+      endpoint: built.endpoint, dns: built.dns, confText: built.conf, privateKey: built.privateKey,
+      createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+days*86400000).toISOString(), inSub: true, httpsSubUrl: null
+    });
+    CONSUMED = (Number(CONSUMED)||0) + gb;
+    LAST_SUB_URL = "";
+    save();
+    renderList(); renderDash(); renderSub();
+    downloadText(built.conf, name.replace(/[\\/:*?"<>|]+/g,"_").replace(/\s+/g,"_").slice(0,60)+".conf");
+    toast("✅ کانفیگ ساخته و دانلود شد");
+    document.getElementById("cfgName").value = "";
+    switchTab("configs");
+  }
+
+  function handleAction(a, i) {
+    var cfg = CONFIGS[i];
+    if (!cfg) return;
+    if (a === "dl") {
+      if (!isActive(cfg)) { toast("⛔ دانلود بسته"); return; }
+      downloadText(cfg.confText, (cfg.name||"config").replace(/\s+/g,"_")+".conf");
+      toast("⬇️ دانلود شد");
+    } else if (a === "copy") {
+      if (!isActive(cfg)) { toast("⛔ کپی بسته"); return; }
+      copyText(cfg.confText||"");
+    } else if (a === "qr") {
+      if (!isActive(cfg)) { toast("⛔ QR بسته"); return; }
+      window.open("https://api.qrserver.com/v1/create-qr-code/?size=240x240&data="+encodeURIComponent((cfg.confText||"").slice(0,1200)), "_blank");
+    } else if (a === "toggle") {
+      cfg.inSub = !(cfg.inSub !== false);
+      if (cfg.inSub && !isActive(Object.assign({}, cfg, {inSub:true}))) {
+        // check days/vol
+        if (remainingDays(cfg)<=0 || ((Number(cfg.gb)||0)-(Number(cfg.usedGB)||0))<=0) {
+          cfg.inSub = false; toast("⛔ نمی‌توان فعال کرد"); save(); renderAll(); return;
+        }
+      }
+      cfg.httpsSubUrl = null; LAST_SUB_URL = "";
+      save(); renderAll();
+      toast(cfg.inSub!==false?"✅ فعال":"⏸ غیرفعال — لینک ساب باطل");
+    } else if (a === "reset") {
+      if (!confirm("آپدیت این کانفیگ؟")) return;
+      var built = buildConf(cfg.name, cfg.days, cfg.users, cfg.gb);
+      cfg.confText = built.conf; cfg.endpoint = built.endpoint; cfg.dns = built.dns;
+      cfg.httpsSubUrl = null; LAST_SUB_URL = "";
+      save(); renderAll(); toast("🔄 آپدیت شد");
+    } else if (a === "del") {
+      if (!confirm("حذف؟ حجم برنمی‌گردد.")) return;
+      CONFIGS.splice(i,1); LAST_SUB_URL = "";
+      save(); renderAll(); toast("🗑️ حذف شد");
+    } else if (a === "sub") {
+      createSubFor(i);
+    }
+  }
+
+  function renderAll() { renderList(); renderDash(); renderSub(); updateStatus(); }
+
+  document.getElementById("btnCreate").addEventListener("click", function(e){ e.preventDefault(); try{ createConfig(); }catch(err){ toast("خطا: "+err.message); } });
+  document.getElementById("btnSubLatest").addEventListener("click", function(){ if(!CONFIGS.length){toast("کانفیگی نیست");return;} createSubFor(0); });
+  document.getElementById("btnSubAll").addEventListener("click", function(){ createSubAll(); });
+  document.getElementById("btnCopySub").addEventListener("click", function(){
+    var v = document.getElementById("subHttps").value;
+    if (!v || v.indexOf("http")!==0) { toast("⚠ ابتدا لینک بسازید"); return; }
+    copyText(v);
+  });
+  document.getElementById("btnOpenSub").addEventListener("click", function(){
+    var v = document.getElementById("subHttps").value;
+    if (v && v.indexOf("http")===0) window.open(v, "_blank");
+    else if (CONFIGS.length) {
+      var body = buildSubPageHtml(CONFIGS[0]);
+      window.open(URL.createObjectURL(new Blob([body],{type:"text/html;charset=utf-8"})), "_blank");
+    } else toast("کانفیگی نیست");
+  });
+  document.getElementById("btnCopyB64").addEventListener("click", function(){
+    var list = CONFIGS.filter(isActive);
+    if (!list.length) { toast("کانفیگ فعالی نیست"); return; }
+    var body = list.map(function(c,i){ return "# "+(c.name||i)+"\n"+(c.confText||""); }).join("\n\n");
+    try { copyText(btoa(unescape(encodeURIComponent(body)))); } catch(e) { copyText(btoa(body)); }
+  });
+
+  document.body.addEventListener("click", function(e){
+    var btn = e.target.closest("button[data-a]");
+    if (!btn || btn.disabled) return;
+    var a = btn.getAttribute("data-a");
+    var i = parseInt(btn.getAttribute("data-i"), 10);
+    try { handleAction(a, i); } catch(err) { toast("خطا: "+(err.message||err)); }
+  });
+
+  load();
+  renderAll();
+  toast("پنل WireGuard4582 آماده — داشبورد | ساخت | کانفیگ | لینک ساب");
+})();
+</script>
+</body>
+</html>
