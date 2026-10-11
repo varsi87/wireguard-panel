@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>پنل 🇩🇪 آلمان | PUBGメAZVIX</title>
 <style>
-:root{--accent:#38bdf8;--accent2:#e879f9;--card:rgba(12,18,34,0.95);--text:#e2e8f0;--muted:#94a3b8;--border:#38bdf855}
+:root{--accent:#14b8a6;--accent2:#f97316;--card:rgba(12,18,34,0.95);--text:#e2e8f0;--muted:#94a3b8;--border:#14b8a655}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Tahoma,"Segoe UI",sans-serif;background:linear-gradient(145deg,#05080f,#0c1222);color:var(--text);min-height:100vh;line-height:1.65;padding:14px}
 .wrap{max-width:780px;margin:0 auto}
@@ -14,7 +14,7 @@ header h1{font-size:1.3rem;background:linear-gradient(90deg,var(--accent),#60a5f
 .badge{display:inline-block;margin-top:8px;padding:4px 12px;border:1px solid var(--accent);border-radius:999px;font-size:0.75rem;color:var(--accent)}
 .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
 .nav button{padding:10px 16px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:12px;cursor:pointer;font-weight:700;font-size:0.88rem;font-family:inherit}
-.nav button.active,.nav button:hover{background:linear-gradient(135deg,#38bdf833,#e879f928);border-color:var(--accent)}
+.nav button.active,.nav button:hover{background:linear-gradient(135deg,#14b8a633,#f9731628);border-color:var(--accent)}
 .tab{display:none}.tab.active{display:block}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
 .card h2{font-size:1.05rem;color:var(--accent);margin-bottom:10px}
@@ -46,7 +46,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 <div class="wrap">
   <header>
     <h1>🛡️ پنل 🇩🇪 آلمان</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل مستقل PUBGメAZVIX | IPv4+IPv6 | حجم 1000GB</p>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل مستقل PUBGメAZVIX | سرور اصلی گیمینگ</p>
     <span class="badge">مالک PUBGメAZVIX</span>
   </header>
 
@@ -74,8 +74,8 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
         <div><label>کاربر</label><input type="number" id="cfgUsers" min="1" max="50" value="1"/></div>
         <div><label>حجم (گیگ)</label><input type="number" id="cfgGB" min="1" max="1000" value="50"/></div>
       </div>
-      <label>نام (اختیاری)</label>
-      <input type="text" id="cfgName" placeholder="پابجی ویژه آلمان"/>
+      <label>نام کانفیگ</label>
+      <input type="text" id="cfgName" placeholder="iRl_game_germany"/>
       <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت + دانلود</button></div>
     </div>
   </div>
@@ -109,8 +109,9 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
 <script>
 (function(){
-  var PANEL = {"id":"pnl_de_stone_v1","countryCode":"de","countryName":"آلمان","flag":"🇩🇪","city":"فرانکفورت","ipType":"both","dnsMode":"dual","dnsCount":72,"totalGB":1000,"endpoint":"de.stonecoldstunner.ir:8445"};
-  var STORAGE_KEY = "wg_stonecold_exp_v1";
+  var PANEL = {totalGB:1000, countryName:"آلمان", flag:"🇩🇪", endpoint:"de.stonecoldstunner.ir:8445"};
+  var SERVER_PUBLIC_KEY = "hw8izxup9rk6FzWrWeCQxj+wNmSszp1JH3XmK87auVk=";
+  var STORAGE_KEY = "wg_irl_azvix_2026_v3";
   var CONFIGS = [];
   var CONSUMED = 0;
   var LAST_SUB_URL = "";
@@ -146,26 +147,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
         CONFIGS = o.configs || [];
         CONSUMED = Number(o.consumedGB) || 0;
         LAST_SUB_URL = o.httpsSubUrl || "";
-      } else {
-        CONFIGS = [{
-          id: "cfg_default_stone",
-          name: "پابجی ویژه - آلمان",
-          days: 30,
-          users: 1,
-          gb: 50,
-          usedGB: 0,
-          endpoint: "de.stonecoldstunner.ir:8445",
-          dns: "1.1.1.1",
-          privateKey: "ALzqcMo+PR5lbRYVCnvkUej3jPvrQiqcqve91Om6k3A=",
-          confText: "[Interface]\nPrivateKey = ALzqcMo+PR5lbRYVCnvkUej3jPvrQiqcqve91Om6k3A=\nAddress = 10.8.3.14/32\nDNS = 1.1.1.1\n\n[Peer]\nPublicKey = hw8izxup9rk6FzWrWeCQxj+wNmSszp1JH3XmK87auVk=\nEndpoint = de.stonecoldstunner.ir:8445\nAllowedIPs = 0.0.0.0/0\nPersistentKeepalive = 25",
-          createdAt: new Date().toISOString(),
-          expiresAt: new Date(Date.now()+30*86400000).toISOString(),
-          inSub: true,
-          httpsSubUrl: null
-        }];
-        CONSUMED = 50;
-        save();
-      }
+      } else { CONFIGS = []; CONSUMED = 0; save(); }
     } catch (e) { CONFIGS = []; CONSUMED = 0; }
     CONFIGS.forEach(function(c){
       if (typeof c.inSub === "undefined") c.inSub = true;
@@ -191,6 +173,43 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     return Math.max(0, (Number(cfg.gb)||0) - (Number(cfg.usedGB)||0)) > 0;
   }
 
+  function toB64(buf) {
+    var b = new Uint8Array(buf), s = "";
+    for (var i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+    return btoa(s);
+  }
+  function genKeys() {
+    var p = new Uint8Array(32), u = new Uint8Array(32);
+    crypto.getRandomValues(p); crypto.getRandomValues(u);
+    p[0] &= 248; p[31] &= 127; p[31] |= 64;
+    return { privateKey: toB64(p), publicKey: toB64(u) };
+  }
+
+  function buildConf(name, days, gb) {
+    var keys = genKeys();
+    var ipSuffix = 10 + Math.floor(Math.random() * 200);
+    return {
+      conf: [
+        "# iRI Gaming WireGuard | Owner: PUBGメAZVIX",
+        "# Name: " + name,
+        "# Volume: " + gb + "GB",
+        "",
+        "[Interface]",
+        "PrivateKey = " + keys.privateKey,
+        "Address = 10.8.9." + ipSuffix + "/32",
+        "DNS = 1.1.1.1",
+        "MTU = 1280",
+        "",
+        "[Peer]",
+        "PublicKey = " + SERVER_PUBLIC_KEY,
+        "Endpoint = " + PANEL.endpoint,
+        "AllowedIPs = 0.0.0.0/0",
+        "PersistentKeepalive = 25",
+        ""
+      ].join("\n")
+    };
+  }
+
   function downloadText(text, filename) {
     var a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([text], { type: "application/octet-stream" }));
@@ -209,20 +228,15 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   }
 
   function updateStatus() {
-    var total = Number(PANEL.totalGB)||100;
+    var total = PANEL.totalGB;
     var used = Math.max(0, Number(CONSUMED)||0);
-    var rem = Math.max(0, total - used);
-    var act = CONFIGS.filter(isActive).length;
     document.getElementById("statusMeta").innerHTML =
-      "کشور: "+PANEL.flag+" "+PANEL.countryName+" ("+PANEL.city+")<br>"+
-      "حجم: <strong style='color:#86efac'>"+used+"</strong> / "+total+" GB — باقی: <strong>"+rem+"</strong> GB<br>"+
-      "کانفیگ فعال: <strong>"+act+"</strong> / "+CONFIGS.length+"<br><span class='owner'>مالک PUBGメAZVIX</span>";
+      "کشور: 🇩🇪 آلمان<br>حجم مصرفی: <strong style='color:#86efac'>" + used + "</strong> / " + total + " GB<br>" +
+      "کانفیگ‌های فعال: <strong>" + CONFIGS.filter(isActive).length + "</strong><br><span class='owner'>مالک PUBGメAZVIX</span>";
     var pct = Math.min(100, Math.round((used/total)*100));
     var fill = document.getElementById("quotaFill");
-    fill.style.width = pct+"%";
-    fill.style.background = pct>=95?"#ef4444":pct>=70?"#f59e0b":"#38bdf8";
-    var btn = document.getElementById("btnCreate");
-    if (btn) btn.disabled = rem <= 0;
+    fill.style.width = pct + "%";
+    fill.style.background = "#14b8a6";
   }
 
   function cfgButtons(cfg, i, on) {
@@ -232,21 +246,20 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       '<button type="button" class="btn btn-o" data-a="copy" data-i="'+i+'"'+(on?"":" disabled")+'>📋 کپی</button>'+
       '<button type="button" class="btn btn-o" data-a="qr" data-i="'+i+'"'+(on?"":" disabled")+'>📱 QR</button>'+
       '<button type="button" class="btn btn-g" data-a="sub" data-i="'+i+'">🔗 لینک ساب</button>'+
-      '<button type="button" class="btn btn-w" data-a="reset" data-i="'+i+'">🔄 آپدیت</button>'+
       '<button type="button" class="btn btn-d" data-a="del" data-i="'+i+'">🗑️</button></div>';
   }
 
   function renderList() {
     updateStatus();
     var list = document.getElementById("cfgList");
-    if (!CONFIGS.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">هنوز کانفیگی نیست</p>'; return; }
+    if (!CONFIGS.length) { list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">هنوز کانفیگی ساخته نشده است</p>'; return; }
     var html = "";
     CONFIGS.forEach(function(cfg, i) {
       var on = isActive(cfg);
       var left = remainingDays(cfg);
       var st = on ? "فعال" : (cfg.inSub===false?"غیرفعال":(left<=0?"منقضی":"حجم تمام"));
-      html += '<div class="cfg" style="opacity:'+(on?1:0.55)+'"><strong>🎮 '+(cfg.name||("#"+(i+1)))+'</strong> <span style="font-size:0.75rem;color:'+(on?"#86efac":"#fca5a5")+'">● '+st+'</span><br>'+
-        '<span style="font-size:0.82rem;color:var(--muted)">'+(cfg.days||0)+' روز • باقی: '+left+' • '+(cfg.gb||0)+' گیگ</span>'+cfgButtons(cfg,i,on)+'</div>';
+      html += '<div class="cfg" style="opacity:'+(on?1:0.55)+'"><strong>🎮 ' + (cfg.name || ("#"+(i+1))) + '</strong> <span style="font-size:0.75rem;color:'+(on?"#86efac":"#fca5a5")+'">● '+st+'</span><br>' +
+        '<span style="font-size:0.82rem;color:var(--muted)">حجم: ' + cfg.gb + 'GB | روز باقی‌مانده: ' + left + '</span>' + cfgButtons(cfg, i, on) + '</div>';
     });
     list.innerHTML = html;
   }
@@ -254,11 +267,11 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   function renderDash() {
     updateStatus();
     var box = document.getElementById("dashList");
-    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">کانفیگی نیست — از تب ساخت کانفیگ شروع کنید</p>'; return; }
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">کانفیگی نیست</p>'; return; }
     var html = "";
     CONFIGS.forEach(function(cfg, i) {
       var on = isActive(cfg);
-      html += '<div class="cfg"><strong>'+(cfg.name||("#"+(i+1)))+'</strong> — '+(on?"فعال":"غیرفعال")+' | '+(cfg.gb||0)+'GB | باقی روز: '+remainingDays(cfg)+
+      html += '<div class="cfg"><strong>'+(cfg.name||("#"+(i+1)))+'</strong> — '+(on?"فعال":"غیرفعال")+' | '+(cfg.gb||0)+'GB' +
         '<br><button type="button" class="btn btn-g" data-a="sub" data-i="'+i+'" style="margin-top:6px">🔗 دریافت لینک ساب</button></div>';
     });
     box.innerHTML = html;
@@ -287,7 +300,6 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     var nameStr = String(cfg.name || "گیمینگ");
     var totalGB = Number(cfg.gb)||0;
     var confData = on ? (cfg.confText || "") : "";
-    var statusTxt = on ? "فعال" : "غیرفعال";
     var subId = String(cfg.id || Math.random().toString(16).slice(2)).replace(/[^a-zA-Z0-9]/g,"").slice(0,16);
     var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" + encodeURIComponent(confData ? confData.slice(0,1200) : "INACTIVE");
     return '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>'+
@@ -297,19 +309,32 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       '.row{display:flex;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.06)}.lbl{color:#a78bfa;font-size:13px}.val{color:#f3e8ff;font-weight:700;direction:ltr;text-align:left;max-width:58%;word-break:break-all}'+
       '.pill{padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700}.ok{background:rgba(34,197,94,.2);color:#86efac;border:1px solid #22c55e}.off{background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid #ef4444}'+
       '.btn{display:block;width:100%;padding:14px;border:none;border-radius:28px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:800;cursor:pointer;margin:12px 0;font-family:inherit}'+
-      '.btn:disabled{background:#4b5563;cursor:not-allowed}.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(15,8,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#d8b4fe;white-space:pre-wrap;word-break:break-all}'+
+      '.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(15,8,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#d8b4fe;white-space:pre-wrap;word-break:break-all}'+
       '.owner{text-align:center;color:#c084fc;font-weight:700;margin:8px 0}</style></head><body><div class="page">'+
       '<h2 style="text-align:center;color:#c084fc">📋 اطلاعات کانفیگ</h2><p class="owner">مالک PUBGメAZVIX</p>'+
       '<div class="card">'+
       '<div class="row"><span class="lbl">نام</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
-      '<div class="row"><span class="lbl">شناسه</span><span class="val">'+subId+'</span></div>'+
       '<div class="row"><span class="lbl">حجم</span><span class="val">'+totalGB+' GB</span></div>'+
-      '<div class="row"><span class="lbl">لوکیشن</span><span class="val">'+PANEL.flag+' '+PANEL.countryName+'</span></div>'+
-      '<div class="row"><span class="lbl">وضعیت</span><span class="val"><span class="pill '+(on?"ok":"off")+'">'+statusTxt+'</span></span></div></div>'+
+      '<div class="row"><span class="lbl">لوکیشن</span><span class="val">🇩🇪 آلمان</span></div>'+
+      '<div class="row"><span class="lbl">وضعیت</span><span class="val"><span class="pill '+(on?"ok":"off")+'">'+(on?"فعال":"غیرفعال")+'</span></span></div></div>'+
       '<div class="conf">'+(confData||"⛔ کانفیگ غیرفعال").replace(/</g,"&lt;")+'</div>'+
-      (on?'<button class="btn" onclick="var c='+JSON.stringify(confData)+';var a=document.createElement(\'a\');a.href=URL.createObjectURL(new Blob([c]));a.download=\'config.conf\';a.click()">⬇️ دانلود</button>':'<button class="btn" disabled>⛔ دانلود غیرفعال</button>')+
+      (on?'<button class="btn" onclick="var c='+JSON.stringify(confData)+';var a=document.createElement(\'a\');a.href=URL.createObjectURL(new Blob([c]));a.download=\'config.conf\';a.click()">⬇️ دانلود</button>':'<button class="btn" disabled>⛔ غیرفعال</button>')+
       '<div class="qr">'+(on?'<img src="'+qrUrl+'" width="220" height="220"/>':'<div style="padding:80px;color:#a78bfa">⛔ غیرفعال</div>')+'</div>'+
-      '<p class="owner">'+PANEL.flag+' '+PANEL.countryName+' • مالک PUBGメAZVIX</p></div></body></html>';
+      '<p class="owner">🇩🇪 آلمان • مالک PUBGメAZVIX</p></div></body></html>';
+  }
+
+  function buildAllSubPageHtml() {
+    var list = CONFIGS.filter(isActive);
+    if (!list.length) return null;
+    var cards = list.map(function(cfg, idx) {
+      return '<div style="background:#fff;border-radius:14px;padding:14px;margin-bottom:14px;color:#111">'+
+        '<h3>'+(cfg.name||("#"+(idx+1)))+'</h3><p style="color:#16a34a;font-weight:700">● فعال</p>'+
+        '<p>حجم: '+(cfg.gb||0)+' GB</p>'+
+        '<pre style="font-size:11px;overflow:auto;max-height:180px;background:#f5f5f5;padding:8px;direction:ltr;text-align:left">'+(cfg.confText||"").replace(/</g,"&lt;")+'</pre></div>';
+    }).join("");
+    return '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"/><title>ساب | آلمان</title></head>'+
+      '<body style="font-family:Tahoma;background:#f0f2f5;padding:16px;max-width:480px;margin:0 auto">'+
+      '<h2>🇩🇪 آلمان — ساب همه فعال‌ها</h2><p style="color:#0d9488;font-weight:700">مالک PUBGメAZVIX</p>'+cards+'</body></html>';
   }
 
   async function uploadHtml(bodyHtml) {
@@ -350,13 +375,52 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     }
   }
 
+  async function createSubAll() {
+    var body = buildAllSubPageHtml();
+    if (!body) { toast("⚠ کانفیگ فعالی نیست"); return; }
+    toast("⏳ ساخت لینک همه فعال‌ها...");
+    var url = await uploadHtml(body);
+    if (url) {
+      LAST_SUB_URL = url;
+      save();
+      var el = document.getElementById("subHttps");
+      if (el) el.value = url;
+      copyText(url);
+      toast("✅ لینک همه فعال‌ها ساخته شد");
+    } else {
+      window.open(URL.createObjectURL(new Blob([body],{type:"text/html;charset=utf-8"})), "_blank");
+      toast("⚠ صفحه محلی باز شد");
+    }
+  }
+
+  function createConfig() {
+    var total = Number(PANEL.totalGB)||1000;
+    var rem = Math.max(0, total - (Number(CONSUMED)||0));
+    var days = parseInt(document.getElementById("cfgDays").value,10)||30;
+    var gb = parseInt(document.getElementById("cfgGB").value,10)||50;
+    var name = (document.getElementById("cfgName").value||"").trim();
+    if (!name) name = "iRl_game_germany";
+    var built = buildConf(name, days, gb);
+    CONFIGS.unshift({
+      id: "cfg_"+Date.now().toString(36), name:name, days:days, gb:gb, usedGB:0,
+      confText: built.conf, createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+days*86400000).toISOString(), inSub: true, httpsSubUrl: null
+    });
+    CONSUMED = (Number(CONSUMED)||0) + gb;
+    LAST_SUB_URL = "";
+    save();
+    renderList(); renderDash(); renderSub();
+    downloadText(built.conf, name + ".conf");
+    toast("✅ کانفیگ ساخته و دانلود شد");
+    document.getElementById("cfgName").value = "";
+    switchTab("configs");
+  }
+
   function handleAction(a, i) {
     var cfg = CONFIGS[i];
     if (!cfg) return;
     if (a === "dl") {
       if (!isActive(cfg)) { toast("⛔ دانلود بسته"); return; }
-      downloadText(cfg.confText, (cfg.name||"config").replace(/\s+/g,"_")+".conf");
-      toast("⬇️ دانلود شد");
+      downloadText(cfg.confText, (cfg.name||"config")+".conf");
     } else if (a === "copy") {
       if (!isActive(cfg)) { toast("⛔ کپی بسته"); return; }
       copyText(cfg.confText||"");
@@ -368,12 +432,8 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       cfg.httpsSubUrl = null; LAST_SUB_URL = "";
       save(); renderAll();
       toast(cfg.inSub!==false?"✅ فعال":"⏸ غیرفعال");
-    } else if (a === "reset") {
-      if (!confirm("آپدیت این کانفیگ؟")) return;
-      cfg.httpsSubUrl = null; LAST_SUB_URL = "";
-      save(); renderAll(); toast("🔄 آپدیت شد");
     } else if (a === "del") {
-      if (!confirm("حذف؟")) return;
+      if (!confirm("حذف شود؟")) return;
       CONFIGS.splice(i,1); LAST_SUB_URL = "";
       save(); renderAll(); toast("🗑️ حذف شد");
     } else if (a === "sub") {
@@ -383,30 +443,9 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   function renderAll() { renderList(); renderDash(); renderSub(); updateStatus(); }
 
-  document.getElementById("btnCreate").addEventListener("click", function(e){
-    e.preventDefault();
-    var days = parseInt(document.getElementById("cfgDays").value,10)||30;
-    var gb = parseInt(document.getElementById("cfgGB").value,10)||50;
-    var name = (document.getElementById("cfgName").value||"").trim() || "پابجی ویژه آلمان";
-    
-    var newConfText = "[Interface]\nPrivateKey = ALzqcMo+PR5lbRYVCnvkUej3jPvrQiqcqve91Om6k3A=\nAddress = 10.8.3.14/32\nDNS = 1.1.1.1\n\n[Peer]\nPublicKey = hw8izxup9rk6FzWrWeCQxj+wNmSszp1JH3XmK87auVk=\nEndpoint = de.stonecoldstunner.ir:8445\nAllowedIPs = 0.0.0.0/0\nPersistentKeepalive = 25";
-    
-    CONFIGS.unshift({
-      id: "cfg_"+Date.now().toString(36), name: name, days: days, users: 1, gb: gb, usedGB: 0,
-      endpoint: "de.stonecoldstunner.ir:8445", dns: "1.1.1.1", confText: newConfText, privateKey: "ALzqcMo+PR5lbRYVCnvkUej3jPvrQiqcqve91Om6k3A=",
-      createdAt: new Date().toISOString(), expiresAt: new Date(Date.now()+days*86400000).toISOString(), inSub: true, httpsSubUrl: null
-    });
-    CONSUMED = (Number(CONSUMED)||0) + gb;
-    LAST_SUB_URL = "";
-    save();
-    renderAll();
-    downloadText(newConfText, name.replace(/[\\/:*?"<>|]+/g,"_")+".conf");
-    toast("✅ کانفیگ جدید با سرور آلمان ساخته شد");
-    document.getElementById("cfgName").value = "";
-    switchTab("configs");
-  });
-
+  document.getElementById("btnCreate").addEventListener("click", function(e){ e.preventDefault(); createConfig(); });
   document.getElementById("btnSubLatest").addEventListener("click", function(){ if(!CONFIGS.length){toast("کانفیگی نیست");return;} createSubFor(0); });
+  document.getElementById("btnSubAll").addEventListener("click", function(){ createSubAll(); });
   document.getElementById("btnCopySub").addEventListener("click", function(){
     var v = document.getElementById("subHttps").value;
     if (!v || v.indexOf("http")!==0) { toast("⚠ ابتدا لینک بسازید"); return; }
@@ -414,24 +453,27 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   });
   document.getElementById("btnOpenSub").addEventListener("click", function(){
     var v = document.getElementById("subHttps").value;
-    if (v && v.indexOf("http")===0) window.open(v, "_blank");
+    if (v && v.indexOf("http")!==0) window.open(v, "_blank");
     else if (CONFIGS.length) {
       var body = buildSubPageHtml(CONFIGS[0]);
       window.open(URL.createObjectURL(new Blob([body],{type:"text/html;charset=utf-8"})), "_blank");
     } else toast("کانفیگی نیست");
   });
+  document.getElementById("btnCopyB64").addEventListener("click", function(){
+    var list = CONFIGS.filter(isActive);
+    if (!list.length) { toast("کانفیگ فعالی نیست"); return; }
+    var body = list.map(function(c,i){ return "# "+(c.name||i)+"\n"+(c.confText||""); }).join("\n\n");
+    try { copyText(btoa(unescape(encodeURIComponent(body)))); } catch(e) { copyText(btoa(body)); }
+  });
 
   document.body.addEventListener("click", function(e){
     var btn = e.target.closest("button[data-a]");
     if (!btn || btn.disabled) return;
-    var a = btn.getAttribute("data-a");
-    var i = parseInt(btn.getAttribute("data-i"), 10);
-    try { handleAction(a, i); } catch(err) { toast("خطا: "+(err.message||err)); }
+    handleAction(btn.getAttribute("data-a"), parseInt(btn.getAttribute("data-i"), 10));
   });
 
   load();
   renderAll();
-  toast("پنل آلمان با کانفیگ شما آماده شد");
 })();
 </script>
 </body>
