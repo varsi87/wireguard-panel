@@ -27,6 +27,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 .btn-p{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#05080f}
 .btn-o{background:transparent;border:1px solid var(--border);color:var(--text)}
 .btn-d{background:rgba(239,68,68,0.15);border:1px solid #ef4444;color:#fca5a5}
+.btn-g{background:linear-gradient(135deg,#f43f5e,#fb923c);color:#fff}
 .cfg{background:rgba(10,16,32,0.8);border-radius:12px;padding:12px;margin:10px 0;border:1px solid rgba(255,255,255,0.08)}
 .cfg strong{color:var(--accent)}
 .meta{font-size:0.84rem;color:var(--muted);line-height:1.8}
@@ -39,7 +40,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 <div class="wrap">
   <header>
     <h1>🛡️ پنل 🇩🇪 آلمان</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل اختصاصی گیمینگ PUBGメAZVIX</p>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل اختصاصی گیمینگ و ساب PUBGメAZVIX</p>
     <span class="badge">مالک PUBGメAZVIX</span>
   </header>
 
@@ -47,6 +48,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     <button type="button" class="active" data-tab="dash">📊 داشبورد</button>
     <button type="button" data-tab="create">➕ ساخت کانفیگ</button>
     <button type="button" data-tab="configs">📂 کانفیگ‌ها</button>
+    <button type="button" data-tab="sub">🔗 لینک ساب</button>
   </div>
 
   <div id="tab-dash" class="tab active">
@@ -74,6 +76,20 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       <div id="cfgList"></div>
     </div>
   </div>
+
+  <div id="tab-sub" class="tab">
+    <div class="card">
+      <h2>🔗 لینک ساب و بارکد اختصاصی</h2>
+      <p class="meta">از این بخش برای دریافت لینک ساب آنلاین و بارکد QR استفاده کنید.</p>
+      <label>لینک ساب آنلاین (آخرین کانفیگ)</label>
+      <input type="text" id="subHttps" readonly placeholder="هنوز ساخته نشده" style="direction:ltr;text-align:left;color:#86efac;font-family:monospace;font-size:0.85rem"/>
+      <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
+        <button type="button" class="btn btn-g" id="btnSubLatest">🚀 ساخت لینک ساب آخرین کانفیگ</button>
+        <button type="button" class="btn btn-o" id="btnCopySub">📋 کپی لینک ساب</button>
+      </div>
+      <div id="subCfgList" style="margin-top:14px"></div>
+    </div>
+  </div>
 </div>
 <div class="toast" id="toast"></div>
 
@@ -83,8 +99,9 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   var FIXED_IP = "10.8.9.199";
   var SERVER_PUB = "hw8izxup9rk6FzWrWeCQxj+wNmSszp1JH3XmK87auVk=";
   var ENDPOINT = "de.stonecoldstunner.ir:8445";
-  var STORAGE_KEY = "wg_vl_fixed_v1";
+  var STORAGE_KEY = "wg_vl_fixed_sub_v1";
   var CONFIGS = [];
+  var LAST_SUB_URL = "";
 
   function toast(msg) {
     var t = document.getElementById("toast");
@@ -102,6 +119,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     if (el) el.classList.add("active");
     if (id === "dash") renderDash();
     if (id === "configs") renderList();
+    if (id === "sub") renderSub();
   }
 
   document.querySelectorAll(".nav button").forEach(function(btn){
@@ -111,11 +129,15 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   function load() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) CONFIGS = JSON.parse(raw) || [];
+      if (raw) {
+        var o = JSON.parse(raw);
+        CONFIGS = o.configs || [];
+        LAST_SUB_URL = o.httpsSubUrl || "";
+      }
     } catch (e) { CONFIGS = []; }
   }
   function save() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(CONFIGS));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ configs: CONFIGS, httpsSubUrl: LAST_SUB_URL }));
   }
 
   function buildConf(name, gb) {
@@ -155,14 +177,78 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   function copyText(text) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function(){ toast("✅ با موفقیت کپی شد"); });
+      navigator.clipboard.writeText(text).then(function(){ toast("✅ کپی شد"); });
     } else {
       var ta = document.createElement("textarea");
       ta.value = text;
       document.body.appendChild(ta);
       ta.select();
-      try { document.execCommand('copy'); toast("✅ کپی شد"); } catch(e) { toast("❌ خطا در کپی"); }
+      try { document.execCommand('copy'); toast("✅ کپی شد"); } catch(e) { toast("❌ خطا"); }
       document.body.removeChild(ta);
+    }
+  }
+
+  function buildSubPageHtml(cfg) {
+    var nameStr = String(cfg.name || "گیمینگ");
+    var totalGB = Number(cfg.gb)||50;
+    var confData = cfg.confText || "";
+    var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" + encodeURIComponent(confData);
+    return '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>'+
+      '<title>ساب | '+nameStr.replace(/</g,"")+'</title><style>'+
+      '*{box-sizing:border-box;margin:0;padding:0}body{font-family:Tahoma,Arial,sans-serif;background:linear-gradient(165deg,#1a0f2e,#2a1548);color:#e8e0f0;padding:14px;min-height:100%}'+
+      '.page{max-width:420px;margin:0 auto}.card{background:rgba(40,25,70,.95);border:1px solid rgba(168,85,247,.3);border-radius:16px;overflow:hidden;margin-bottom:12px}'+
+      '.row{display:flex;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.06)}.lbl{color:#a78bfa;font-size:13px}.val{color:#f3e8ff;font-weight:700;direction:ltr;text-align:left;max-width:58%;word-break:break-all}'+
+      '.pill{padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(34,197,94,.2);color:#86efac;border:1px solid #22c55e}'+
+      '.btn{display:block;width:100%;padding:14px;border:none;border-radius:28px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:800;cursor:pointer;margin:12px 0;font-family:inherit}'+
+      '.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(15,8,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#d8b4fe;white-space:pre-wrap;word-break:break-all}'+
+      '.owner{text-align:center;color:#c084fc;font-weight:700;margin:8px 0}</style></head><body><div class="page">'+
+      '<h2 style="text-align:center;color:#c084fc">📋 اطلاعات کانفیگ گیمینگ</h2><p class="owner">مالک PUBGメAZVIX</p>'+
+      '<div class="card">'+
+      '<div class="row"><span class="lbl">نام</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
+      '<div class="row"><span class="lbl">حجم</span><span class="val">'+totalGB+' GB</span></div>'+
+      '<div class="row"><span class="lbl">لوکیشن</span><span class="val">🇩🇪 آلمان</span></div>'+
+      '<div class="row"><span class="lbl">وضعیت</span><span class="val"><span class="pill">فعال</span></span></div></div>'+
+      '<div class="conf">'+confData.replace(/</g,"&lt;")+'</div>'+
+      '<button class="btn" onclick="var c='+JSON.stringify(confData)+';var a=document.createElement(\'a\');a.href=URL.createObjectURL(new Blob([c]));a.download=\'config.conf\';a.click()">⬇️ دانلود فایل</button>'+
+      '<div class="qr"><img src="'+qrUrl+'" width="220" height="220"/></div>'+
+      '<p class="owner">🇩🇪 آلمان • مالک PUBGメAZVIX</p></div></body></html>';
+  }
+
+  async function uploadHtml(bodyHtml) {
+    var url = null;
+    try {
+      var res = await fetch("https://api.pastes.dev/post", { method:"POST", headers:{"Content-Type":"text/html; charset=utf-8"}, body: bodyHtml });
+      if (res.ok) { var data = await res.json(); if (data && data.key) url = "https://api.pastes.dev/"+data.key; }
+    } catch(e) {}
+    if (!url) {
+      try {
+        var fd = new FormData();
+        fd.append("file", new Blob([bodyHtml],{type:"text/html;charset=utf-8"}), "sub.html");
+        var res2 = await fetch("https://0x0.st", { method:"POST", body: fd });
+        if (res2.ok) { var t = (await res2.text()).trim(); if (t.indexOf("http")===0) url = t; }
+      } catch(e) {}
+    }
+    return url;
+  }
+
+  async function createSubFor(i) {
+    var cfg = CONFIGS[i];
+    if (!cfg) return;
+    toast("⏳ در حال ساخت لینک ساب و بارکد...");
+    var body = buildSubPageHtml(cfg);
+    var url = await uploadHtml(body);
+    if (url) {
+      cfg.httpsSubUrl = url;
+      LAST_SUB_URL = url;
+      save();
+      var el = document.getElementById("subHttps");
+      if (el) el.value = url;
+      copyText(url);
+      toast("✅ لینک ساب و بارکد ساخته و کپی شد");
+      renderSub();
+    } else {
+      window.open(URL.createObjectURL(new Blob([body],{type:"text/html;charset=utf-8"})), "_blank");
+      toast("⚠ صفحه محلی ساب باز شد");
     }
   }
 
@@ -177,16 +263,39 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       html += '<div class="cfg"><strong>🎮 ' + cfg.name + '</strong><br>' +
         '<span style="font-size:0.82rem;color:var(--muted)">حجم: ' + cfg.gb + 'GB | آی‌پی: ' + FIXED_IP + '</span>' +
         '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' +
-        '<button class="btn btn-p" data-act="dl" data-idx="' + i + '">⬇️ دانلود فایل</button>' +
-        '<button class="btn btn-o" data-act="copy" data-idx="' + i + '">📋 کپی متن</button>' +
-        '<button class="btn btn-d" data-act="del" data-idx="' + i + '">🗑️ حذف</button></div></div>';
+        '<button class="btn btn-p" data-act="dl" data-idx="' + i + '">⬇️ دانلود</button>' +
+        '<button class="btn btn-o" data-act="copy" data-idx="' + i + '">📋 کپی</button>' +
+        '<button class="btn btn-g" data-act="sub" data-idx="' + i + '">🔗 ساب و QR</button>' +
+        '<button class="btn btn-d" data-act="del" data-idx="' + i + '">🗑️</button></div></div>';
     });
     list.innerHTML = html;
   }
 
   function renderDash() {
-    document.getElementById("statusMeta").innerHTML = "تعداد کانفیگ‌های ثبت‌شده: <strong>" + CONFIGS.length + "</strong><br>وضعیت سرور: <span style='color:#86efac'>متصل و بهینه برای پابجی و وب‌گردی</span><br><span class='owner'>مالک PUBGメAZVIX</span>";
-    document.getElementById("dashList").innerHTML = '<p style="color:var(--muted)">پنل روی کلید اصلی و ثابت تنظیم شده است.</p>';
+    document.getElementById("statusMeta").innerHTML = "تعداد کانفیگ‌ها: <strong>" + CONFIGS.length + "</strong><br>وضعیت: <span style='color:#86efac'>متصل روی کلید اصلی (مخصوص پابجی و وب‌گردی)</span><br><span class='owner'>مالک PUBGメAZVIX</span>";
+    var box = document.getElementById("dashList");
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">کانفیگی نیست</p>'; return; }
+    var html = "";
+    CONFIGS.forEach(function(cfg, i) {
+      html += '<div class="cfg"><strong>'+cfg.name+'</strong> — <button type="button" class="btn btn-g" data-act="sub" data-idx="'+i+'" style="margin-top:4px">🔗 دریافت ساب و بارکد</button></div>';
+    });
+    box.innerHTML = html;
+  }
+
+  function renderSub() {
+    var el = document.getElementById("subHttps");
+    if (el) el.value = LAST_SUB_URL || "";
+    var box = document.getElementById("subCfgList");
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">ابتدا کانفیگ بسازید</p>'; return; }
+    var html = '<strong style="color:var::accent;font-size:0.9rem">لیست ساب کانفیگ‌ها:</strong>';
+    CONFIGS.forEach(function(cfg, i) {
+      html += '<div class="cfg"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">'+
+        '<span>'+cfg.name+'</span>'+
+        '<button type="button" class="btn btn-g" data-act="sub" data-idx="'+i+'">🔗 ساخت ساب و QR</button></div>'+
+        (cfg.httpsSubUrl ? '<div style="margin-top:6px;font-size:0.72rem;direction:ltr;text-align:left;color:#86efac;word-break:break-all;font-family:monospace">'+cfg.httpsSubUrl+'</div>' : '')+
+        '</div>';
+    });
+    box.innerHTML = html;
   }
 
   document.getElementById("btnCreate").addEventListener("click", function(e){
@@ -195,12 +304,23 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     var gb = parseInt(document.getElementById("cfgGB").value, 10) || 50;
     
     var confText = buildConf(name, gb);
-    CONFIGS.unshift({ name: name, gb: gb, confText: confText });
+    CONFIGS.unshift({ name: name, gb: gb, confText: confText, httpsSubUrl: null });
     save();
     
     downloadText(confText, name + ".conf");
     toast("✅ کانفیگ ساخته و دانلود شد");
     switchTab("configs");
+  });
+
+  document.getElementById("btnSubLatest").addEventListener("click", function(){
+    if (!CONFIGS.length) { toast("⚠ اول کانفیگ بسازید"); return; }
+    createSubFor(0);
+  });
+
+  document.getElementById("btnCopySub").addEventListener("click", function(){
+    var v = document.getElementById("subHttps").value;
+    if (!v || v.indexOf("http")!==0) { toast("⚠ ابتدا لینک ساب بسازید"); return; }
+    copyText(v);
   });
 
   document.body.addEventListener("click", function(e){
@@ -216,20 +336,20 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       toast("⬇️ فایل دانلود شد");
     } else if (act === "copy") {
       copyText(cfg.confText);
+    } else if (act === "sub") {
+      createSubFor(idx);
     } else if (act === "del") {
       if (confirm("حذف شود؟")) {
         CONFIGS.splice(idx, 1);
         save();
-        renderList();
-        renderDash();
+        renderList(); renderDash(); renderSub();
         toast("🗑️ حذف شد");
       }
     }
   });
 
   load();
-  renderList();
-  renderDash();
+  renderList(); renderDash(); renderSub();
 })();
 </script>
 </body>
