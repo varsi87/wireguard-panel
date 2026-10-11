@@ -40,13 +40,13 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 <div class="wrap">
   <header>
     <h1>🛡️ پنل 🇩🇪 آلمان</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل اختصاصی گیمینگ و ساب PUBGメAZVIX</p>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل اختصاصی گیمینگ و مدیریت کاربران PUBGメAZVIX</p>
     <span class="badge">مالک PUBGメAZVIX</span>
   </header>
 
   <div class="nav">
     <button type="button" class="active" data-tab="dash">📊 داشبورد</button>
-    <button type="button" data-tab="create">➕ ساخت کانفیگ</button>
+    <button type="button" data-tab="create">➕ افزودن کاربر و ساخت</button>
     <button type="button" data-tab="configs">📂 کانفیگ‌ها</button>
     <button type="button" data-tab="sub">🔗 لینک ساب</button>
   </div>
@@ -61,18 +61,18 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   <div id="tab-create" class="tab">
     <div class="card">
-      <h2>➕ ساخت کانفیگ پرقدرت گیم</h2>
+      <h2>➕ افزودن کاربر جدید</h2>
       <div class="row">
-        <div><label>نام کانفیگ</label><input type="text" id="cfgName" value="VlN_game_germany"/></div>
+        <div><label>نام کاربر / کانفیگ</label><input type="text" id="cfgName" placeholder="مثلا: VlN_user_2"/></div>
         <div><label>حجم (گیگ)</label><input type="number" id="cfgGB" value="50"/></div>
       </div>
-      <div style="margin-top:14px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت و دانلود فوری فایل</button></div>
+      <div style="margin-top:14px"><button type="button" class="btn btn-p" id="btnCreate">✨ ثبت کاربر و دانلود کانفیگ</button></div>
     </div>
   </div>
 
   <div id="tab-configs" class="tab">
     <div class="card">
-      <h2>📂 کانفیگ‌های ساخته‌شده</h2>
+      <h2>📂 کانفیگ‌های کاربران</h2>
       <div id="cfgList"></div>
     </div>
   </div>
@@ -80,11 +80,11 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   <div id="tab-sub" class="tab">
     <div class="card">
       <h2>🔗 لینک ساب و بارکد اختصاصی</h2>
-      <p class="meta">از این بخش برای دریافت لینک ساب آنلاین و بارکد QR استفاده کنید.</p>
-      <label>لینک ساب آنلاین (آخرین کانفیگ)</label>
+      <p class="meta">از این بخش برای دریافت لینک ساب آنلاین و بارکد QR کاربران استفاده کنید.</p>
+      <label>لینک ساب آنلاین (آخرین کاربر)</label>
       <input type="text" id="subHttps" readonly placeholder="هنوز ساخته نشده" style="direction:ltr;text-align:left;color:#86efac;font-family:monospace;font-size:0.85rem"/>
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
-        <button type="button" class="btn btn-g" id="btnSubLatest">🚀 ساخت لینک ساب آخرین کانفیگ</button>
+        <button type="button" class="btn btn-g" id="btnSubLatest">🚀 ساخت لینک ساب آخرین کاربر</button>
         <button type="button" class="btn btn-o" id="btnCopySub">📋 کپی لینک ساب</button>
       </div>
       <div id="subCfgList" style="margin-top:14px"></div>
@@ -99,7 +99,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   var FIXED_IP = "10.8.9.199";
   var SERVER_PUB = "hw8izxup9rk6FzWrWeCQxj+wNmSszp1JH3XmK87auVk=";
   var ENDPOINT = "de.stonecoldstunner.ir:8445";
-  var STORAGE_KEY = "wg_vl_fixed_sub_v1";
+  var STORAGE_KEY = "wg_vl_fixed_users_v2";
   var CONFIGS = [];
   var LAST_SUB_URL = "";
 
@@ -143,7 +143,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   function buildConf(name, gb) {
     return [
       "# VlN Gaming WireGuard | Owner: PUBGメAZVIX",
-      "# Name: " + name,
+      "# User: " + name,
       "# Volume: " + gb + "GB",
       "",
       "[Interface]",
@@ -189,7 +189,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   }
 
   function buildSubPageHtml(cfg) {
-    var nameStr = String(cfg.name || "گیمینگ");
+    var nameStr = String(cfg.name || "کاربر");
     var totalGB = Number(cfg.gb)||50;
     var confData = cfg.confText || "";
     var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=" + encodeURIComponent(confData);
@@ -202,9 +202,9 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       '.btn{display:block;width:100%;padding:14px;border:none;border-radius:28px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:800;cursor:pointer;margin:12px 0;font-family:inherit}'+
       '.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(15,8,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#d8b4fe;white-space:pre-wrap;word-break:break-all}'+
       '.owner{text-align:center;color:#c084fc;font-weight:700;margin:8px 0}</style></head><body><div class="page">'+
-      '<h2 style="text-align:center;color:#c084fc">📋 اطلاعات کانفیگ گیمینگ</h2><p class="owner">مالک PUBGメAZVIX</p>'+
+      '<h2 style="text-align:center;color:#c084fc">👤 اطلاعات کاربر و گیم</h2><p class="owner">مالک PUBGメAZVIX</p>'+
       '<div class="card">'+
-      '<div class="row"><span class="lbl">نام</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
+      '<div class="row"><span class="lbl">نام کاربر</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
       '<div class="row"><span class="lbl">حجم</span><span class="val">'+totalGB+' GB</span></div>'+
       '<div class="row"><span class="lbl">لوکیشن</span><span class="val">🇩🇪 آلمان</span></div>'+
       '<div class="row"><span class="lbl">وضعیت</span><span class="val"><span class="pill">فعال</span></span></div></div>'+
@@ -255,12 +255,12 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   function renderList() {
     var list = document.getElementById("cfgList");
     if (!CONFIGS.length) {
-      list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">هنوز کانفیگی ساخته نشده است</p>';
+      list.innerHTML = '<p style="color:var(--muted);text-align:center;padding:16px">هنوز کاربری ثبت نشده است</p>';
       return;
     }
     var html = "";
     CONFIGS.forEach(function(cfg, i) {
-      html += '<div class="cfg"><strong>🎮 ' + cfg.name + '</strong><br>' +
+      html += '<div class="cfg"><strong>👤 کاربر: ' + cfg.name + '</strong><br>' +
         '<span style="font-size:0.82rem;color:var(--muted)">حجم: ' + cfg.gb + 'GB | آی‌پی: ' + FIXED_IP + '</span>' +
         '<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">' +
         '<button class="btn btn-p" data-act="dl" data-idx="' + i + '">⬇️ دانلود</button>' +
@@ -272,9 +272,9 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   }
 
   function renderDash() {
-    document.getElementById("statusMeta").innerHTML = "تعداد کانفیگ‌ها: <strong>" + CONFIGS.length + "</strong><br>وضعیت: <span style='color:#86efac'>متصل روی کلید اصلی (مخصوص پابجی و وب‌گردی)</span><br><span class='owner'>مالک PUBGメAZVIX</span>";
+    document.getElementById("statusMeta").innerHTML = "تعداد کاربران ثبت‌شده: <strong>" + CONFIGS.length + "</strong><br>وضعیت: <span style='color:#86efac'>متصل روی سرور اصلی (مخصوص پابجی و وب‌گردی)</span><br><span class='owner'>مالک PUBGメAZVIX</span>";
     var box = document.getElementById("dashList");
-    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">کانفیگی نیست</p>'; return; }
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">کاربری ثبت نشده است</p>'; return; }
     var html = "";
     CONFIGS.forEach(function(cfg, i) {
       html += '<div class="cfg"><strong>'+cfg.name+'</strong> — <button type="button" class="btn btn-g" data-act="sub" data-idx="'+i+'" style="margin-top:4px">🔗 دریافت ساب و بارکد</button></div>';
@@ -286,8 +286,8 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     var el = document.getElementById("subHttps");
     if (el) el.value = LAST_SUB_URL || "";
     var box = document.getElementById("subCfgList");
-    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">ابتدا کانفیگ بسازید</p>'; return; }
-    var html = '<strong style="color:var::accent;font-size:0.9rem">لیست ساب کانفیگ‌ها:</strong>';
+    if (!CONFIGS.length) { box.innerHTML = '<p style="color:var(--muted)">ابتدا کاربر ثبت کنید</p>'; return; }
+    var html = '<strong style="color:var(--accent);font-size:0.9rem">لیست ساب کاربران:</strong>';
     CONFIGS.forEach(function(cfg, i) {
       html += '<div class="cfg"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">'+
         '<span>'+cfg.name+'</span>'+
@@ -300,7 +300,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   document.getElementById("btnCreate").addEventListener("click", function(e){
     e.preventDefault();
-    var name = (document.getElementById("cfgName").value || "").trim() || "VlN_game_germany";
+    var name = (document.getElementById("cfgName").value || "").trim() || "VlN_user";
     var gb = parseInt(document.getElementById("cfgGB").value, 10) || 50;
     
     var confText = buildConf(name, gb);
@@ -308,12 +308,13 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     save();
     
     downloadText(confText, name + ".conf");
-    toast("✅ کانفیگ ساخته و دانلود شد");
+    toast("✅ کاربر ثبت و کانفیگ دانلود شد");
+    document.getElementById("cfgName").value = "";
     switchTab("configs");
   });
 
   document.getElementById("btnSubLatest").addEventListener("click", function(){
-    if (!CONFIGS.length) { toast("⚠ اول کانفیگ بسازید"); return; }
+    if (!CONFIGS.length) { toast("⚠ اول کاربر ثبت کنید"); return; }
     createSubFor(0);
   });
 
