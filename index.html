@@ -45,20 +45,20 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 <div class="wrap">
   <header>
     <h1>🛡️ پنل 🇩🇪 آلمان</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل مستقل PUBGメAZVIX | سرور اصلی گیمینگ</p>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">پنل تخصصی گیمینگ پابجی PUBGメAZVIX</p>
     <span class="badge">مالک PUBGメAZVIX</span>
   </header>
 
   <div class="nav">
     <button type="button" class="active" data-tab="dash">📊 داشبورد</button>
-    <button type="button" data-tab="create">➕ ساخت کانفیگ</button>
+    <button type="button" data-tab="create">➕ ساخت کانفیگ گیم</button>
     <button type="button" data-tab="configs">📂 کانفیگ‌ها</button>
     <button type="button" data-tab="sub">🔗 لینک ساب</button>
   </div>
 
   <div id="tab-dash" class="tab active">
     <div class="card">
-      <h2>📊 داشبورد این پنل</h2>
+      <h2>📊 وضعیت پنل گیمینگ</h2>
       <div class="meta" id="statusMeta">...</div>
       <div class="quota"><div id="quotaFill" style="width:0%"></div></div>
       <div id="dashList" style="margin-top:12px"></div>
@@ -67,7 +67,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   <div id="tab-create" class="tab">
     <div class="card">
-      <h2>➕ ساخت کانفیگ پابجی</h2>
+      <h2>➕ ساخت کانفیگ بهینه پابجی</h2>
       <div class="row">
         <div><label>روز اعتبار</label><input type="number" id="cfgDays" min="1" max="365" value="30"/></div>
         <div><label>کاربر</label><input type="number" id="cfgUsers" min="1" max="50" value="1"/></div>
@@ -75,7 +75,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       </div>
       <label>نام کانفیگ</label>
       <input type="text" id="cfgName" placeholder="VlN_game_germany"/>
-      <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت + دانلود</button></div>
+      <div style="margin-top:12px"><button type="button" class="btn btn-p" id="btnCreate">✨ ساخت و دانلود گیم</button></div>
     </div>
   </div>
 
@@ -89,7 +89,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   <div id="tab-sub" class="tab">
     <div class="card">
       <h2>🔗 دریافت لینک ساب</h2>
-      <p class="meta">از این بخش برای هر کانفیگ یا همه کانفیگ‌های فعال، لینک ساب بگیرید.</p>
+      <p class="meta">از این بخش برای دریافت لینک ساب و بارکد اختصاصی استفاده کنید.</p>
       <label>لینک ساب https (آخرین ساخته‌شده)</label>
       <input type="text" id="subHttps" readonly placeholder="هنوز ساخته نشده" style="direction:ltr;text-align:left;color:#86efac;font-family:monospace;font-size:0.85rem"/>
       <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">
@@ -99,7 +99,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
         <button type="button" class="btn btn-o" id="btnOpenSub">🌐 باز کردن صفحه ساب</button>
         <button type="button" class="btn btn-o" id="btnCopyB64">📋 کپی Base64</button>
       </div>
-      <div class="note">بعد از هر تغییر وضعیت یا مصرف، دوباره لینک بسازید تا صفحه ساب به‌روز باشد. مالک PUBGメAZVIX</div>
+      <div class="note">بهینه‌شده برای رفع ارور اتصال گوگل و پابجی. مالک PUBGメAZVIX</div>
       <div id="subCfgList" style="margin-top:14px"></div>
     </div>
   </div>
@@ -112,7 +112,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   var FIXED_PRIV = "yPzPy3/6sXaeQHAi5cl4QVb21K9fw68B2V7dy9Pk7Wo=";
   var FIXED_IP = "10.8.9.199";
   var SERVER_PUBLIC_KEY = "hw8izxup9rk6FzWrWeCQxj+wNmSszp1JH3XmK87auVk=";
-  var STORAGE_KEY = "wg_irl_azvix_original_fixed_v1";
+  var STORAGE_KEY = "wg_irl_azvix_game_fix_v2";
   var CONFIGS = [];
   var CONSUMED = 0;
   var LAST_SUB_URL = "";
@@ -177,14 +177,14 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
   function buildConf(name, days, gb) {
     return {
       conf: [
-        "# iRI Gaming WireGuard | Owner: PUBGメAZVIX",
+        "# PUBG Gaming WireGuard | Owner: PUBGメAZVIX",
         "# Name: " + name,
         "# Volume: " + gb + "GB",
         "",
         "[Interface]",
         "PrivateKey = " + FIXED_PRIV,
         "Address = " + FIXED_IP + "/32",
-        "DNS = 1.1.1.1",
+        "DNS = 8.8.8.8, 8.8.4.4",
         "MTU = 1280",
         "",
         "[Peer]",
@@ -218,7 +218,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     var total = PANEL.totalGB;
     var used = Math.max(0, Number(CONSUMED)||0);
     document.getElementById("statusMeta").innerHTML =
-      "کشور: 🇩🇪 آلمان<br>حجم مصرفی: <strong style='color:#86efac'>" + used + "</strong> / " + total + " GB<br>" +
+      "کشور: 🇩🇪 آلمان (گیمینگ پابجی)<br>حجم مصرفی: <strong style='color:#86efac'>" + used + "</strong> / " + total + " GB<br>" +
       "کانفیگ‌های فعال: <strong>" + CONFIGS.filter(isActive).length + "</strong><br><span class='owner'>مالک PUBGメAZVIX</span>";
     var pct = Math.min(100, Math.round((used/total)*100));
     var fill = document.getElementById("quotaFill");
@@ -297,11 +297,11 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       '.btn{display:block;width:100%;padding:14px;border:none;border-radius:28px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;font-weight:800;cursor:pointer;margin:12px 0;font-family:inherit}'+
       '.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(15,8,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#d8b4fe;white-space:pre-wrap;word-break:break-all}'+
       '.owner{text-align:center;color:#c084fc;font-weight:700;margin:8px 0}</style></head><body><div class="page">'+
-      '<h2 style="text-align:center;color:#c084fc">📋 اطلاعات کانفیگ</h2><p class="owner">مالک PUBGメAZVIX</p>'+
+      '<h2 style="text-align:center;color:#c084fc">📋 اطلاعات کانفیگ پابجی</h2><p class="owner">مالک PUBGメAZVIX</p>'+
       '<div class="card">'+
       '<div class="row"><span class="lbl">نام</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
       '<div class="row"><span class="lbl">حجم</span><span class="val">'+totalGB+' GB</span></div>'+
-      '<div class="row"><span class="lbl">لوکیشن</span><span class="val">🇩🇪 آلمان</span></div>'+
+      '<div class="row"><span class="lbl">لوکیشن</span><span class="val">🇩🇪 آلمان (گیم)</span></div>'+
       '<div class="row"><span class="lbl">وضعیت</span><span class="val"><span class="pill '+(on?"ok":"off")+'">'+(on?"فعال":"غیرفعال")+'</span></span></div></div>'+
       '<div class="conf">'+(confData||"⛔ کانفیگ غیرفعال").replace(/</g,"&lt;")+'</div>'+
       (on?'<button class="btn" onclick="var c='+JSON.stringify(confData)+';var a=document.createElement(\'a\');a.href=URL.createObjectURL(new Blob([c]));a.download=\'config.conf\';a.click()">⬇️ دانلود</button>':'<button class="btn" disabled>⛔ غیرفعال</button>')+
@@ -396,7 +396,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     save();
     renderList(); renderDash(); renderSub();
     downloadText(built.conf, name + ".conf");
-    toast("✅ کانفیگ ساخته و دانلود شد");
+    toast("✅ کانفیگ گیم ساخته و دانلود شد");
     document.getElementById("cfgName").value = "";
     switchTab("configs");
   }
