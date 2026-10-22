@@ -46,8 +46,8 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 <div class="wrap">
   <header>
     <h1>🛡️ پنل 🇩🇪 آلمان (فرانکفورت)</h1>
-    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">WireGuard Ultra v9 · Gaming Optimized | حجم کل: ۱۰,۰۰۰ گیگابایت[span_2](start_span)[span_2](end_span)</p>
-    <span class="badge">@pubgdnswir · @captain0spubg</span>
+    <p style="color:var(--muted);margin-top:6px;font-size:0.9rem">WireGuard Ultra v9 · Gaming Optimized | حجم کل: ۱۰,۰۰۰ گیگابایت</p>
+    <span class="badge">سرور اختصاصی گیمینگ</span>
   </header>
 
   <div class="nav">
@@ -100,7 +100,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
         <button type="button" class="btn btn-o" id="btnOpenSub">🌐 باز کردن صفحه ساب</button>
         <button type="button" class="btn btn-o" id="btnCopyB64">📋 کپی Base64</button>
       </div>
-      <div class="note">بعد از هر تغییر وضعیت یا مصرف، دوباره لینک بسازید تا صفحه ساب به‌روز باشد. @pubgdnswir</div>
+      <div class="note">بعد از هر تغییر وضعیت یا مصرف، دوباره لینک بسازید تا صفحه ساب به‌روز باشد.</div>
       <div id="subCfgList" style="margin-top:14px"></div>
     </div>
   </div>
@@ -187,7 +187,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     var safe = String(name).replace(/[^\x20-\x7E]/g,"_").slice(0,40);
     var conf = [
       "# ╔══════════════════════════════════════════════════════════════════╗",
-      "# ║  WireGuard Ultra v9 · GAMING OPTIMIZED · @pubgdnswir              ║",
+      "# ║  WireGuard Ultra v9 · GAMING OPTIMIZED                          ║",
       "# ╚══════════════════════════════════════════════════════════════════╝",
       "# Name: "+safe,
       "# Volume: "+gb+"GB",
@@ -235,7 +235,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
     document.getElementById("statusMeta").innerHTML =
       "لوکیشن: "+PANEL.flag+" "+PANEL.countryName+" ("+PANEL.city+")<br>"+
       "حجم کل پنل: <strong style='color:#86efac'>"+used+"</strong> / "+total+" GB — باقی‌مانده: <strong>"+rem+"</strong> GB<br>"+
-      "کانفیگ فعال: <strong>"+act+"</strong> / "+CONFIGS.length+"<br><span class='owner'>کانال: @pubgdnswir</span>";
+      "کانفیگ فعال: <strong>"+act+"</strong> / "+CONFIGS.length;
     var pct = Math.min(100, Math.round((used/total)*100));
     var fill = document.getElementById("quotaFill");
     fill.style.width = pct+"%";
@@ -318,7 +318,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       '.btn{display:block;width:100%;padding:14px;border:none;border-radius:28px;background:linear-gradient(135deg,#3b82f6,#2563eb);color:#fff;font-weight:800;cursor:pointer;margin:12px 0;font-family:inherit}'+
       '.btn:disabled{background:#4b5563;cursor:not-allowed}.qr{background:#fff;border-radius:16px;padding:16px;text-align:center;margin:12px 0}.conf{background:rgba(10,15,30,.95);border-radius:12px;padding:12px;font-family:monospace;font-size:11px;direction:ltr;text-align:left;max-height:260px;overflow:auto;color:#93c5fd;white-space:pre-wrap;word-break:break-all}'+
       '.owner{text-align:center;color:#60a5fa;font-weight:700;margin:8px 0}</style></head><body><div class="page">'+
-      '<h2 style="text-align:center;color:#60a5fa">📋 اطلاعات کانفیگ گیمینگ</h2><p class="owner">کانال: @pubgdnswir</p>'+
+      '<h2 style="text-align:center;color:#60a5fa">📋 اطلاعات کانفیگ گیمینگ</h2>'+
       '<div class="card">'+
       '<div class="row"><span class="lbl">نام</span><span class="val">'+nameStr.replace(/</g,"")+'</span></div>'+
       '<div class="row"><span class="lbl">شناسه</span><span class="val">'+subId+'</span></div>'+
@@ -328,7 +328,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       '<div class="conf">'+(confData||"⛔ کانفیگ غیرفعال").replace(/</g,"&lt;")+'</div>'+
       (on?'<button class="btn" onclick="var c='+JSON.stringify(confData)+';var a=document.createElement(\'a\');a.href=URL.createObjectURL(new Blob([c]));a.download=\'config.conf\';a.click()">⬇️ دانلود</button>':'<button class="btn" disabled>⛔ دانلود غیرفعال</button>')+
       '<div class="qr">'+(on?'<img src="'+qrUrl+'" width="220" height="220"/>':'<div style="padding:80px;color:#60a5fa">⛔ غیرفعال</div>')+
-      '<p class="owner">'+PANEL.flag+' '+PANEL.countryName+' • @pubgdnswir</p></div></body></html>';
+      '</div></div></body></html>';
   }
 
   function buildAllSubPageHtml() {
@@ -338,12 +338,11 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
       return '<div style="background:#fff;border-radius:14px;padding:14px;margin-bottom:14px;color:#111">'+
         '<h3>'+(cfg.name||("#"+(idx+1)))+'</h3><p style="color:#16a34a;font-weight:700">● فعال</p>'+
         '<p>حجم: '+(cfg.gb||0)+' GB | روز: '+(cfg.days||0)+'</p>'+
-        '<p style="color:#2563eb;font-weight:700">کانال: @pubgdnswir</p>'+
         '<pre style="font-size:11px;overflow:auto;max-height:180px;background:#f5f5f5;padding:8px;direction:ltr;text-align:left">'+(cfg.confText||"").replace(/</g,"&lt;")+'</pre></div>';
     }).join("");
     return '<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"/><title>ساب | '+PANEL.countryName+'</title></head>'+
       '<body style="font-family:Tahoma;background:#f0f2f5;padding:16px;max-width:480px;margin:0 auto">'+
-      '<h2>'+PANEL.flag+' '+PANEL.countryName+' — ساب همه فعال‌ها</h2><p style="color:#2563eb;font-weight:700">@pubgdnswir</p>'+cards+'</body></html>';
+      '<h2>'+PANEL.flag+' '+PANEL.countryName+' — ساب همه فعال‌ها</h2>'+cards+'</body></html>';
   }
 
   async function uploadHtml(bodyHtml) {
@@ -501,7 +500,7 @@ textarea{min-height:70px;font-family:monospace;font-size:0.75rem;direction:ltr;t
 
   load();
   renderAll();
-  toast("پنل آلمان WireGuard Ultra آماده — حجم کل: 10000 GB");
+  toast("پنل آماده است");
 })();
 </script>
 </body>
